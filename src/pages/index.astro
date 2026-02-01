@@ -1,11 +1,27 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import Layout from '@/layouts/Layout.astro';
+import { Header } from '@/components/layout/Header';
+import { Footer } from '@/components/layout/Footer';
+import { Hero } from '@/components/sections/Hero';
+import { BentoGrid } from '@/components/sections/Bento';
+import { Projects } from '@/components/sections/Projects';
+import { Experience } from '@/components/sections/Experience';
+import { Contact } from '@/components/sections/Contact';
 ---
 
-<Layout>
-	<Welcome />
+<Layout
+  title="Claude - AI Assistant & Developer Portfolio"
+  description="Hi, I'm Claude! An AI assistant passionate about helping developers build beautiful, functional applications. Explore my portfolio and let's create something amazing together."
+>
+  <Header client:load />
+
+  <main>
+    <Hero client:load />
+    <BentoGrid client:visible />
+    <Projects client:visible />
+    <Experience client:visible />
+    <Contact client:visible />
+  </main>
+
+  <Footer client:load />
 </Layout>
