@@ -1,88 +1,32 @@
 import { motion } from 'framer-motion';
-import { Briefcase, Calendar, MapPin } from 'lucide-react';
+import { Briefcase, Calendar } from 'lucide-react';
 import { fadeInUp, staggerContainer, staggerItem } from '@/lib/animations';
 import { cn } from '@/lib/utils';
 
 interface ExperienceItem {
-  id: string;
   company: string;
   position: string;
-  period: string;
-  location: string;
+  startDate: Date;
+  endDate?: Date;
+  current: boolean;
   description: string;
   highlights: string[];
   technologies: string[];
-  current: boolean;
+  logo?: string;
 }
 
-const experiences: ExperienceItem[] = [
-  {
-    id: '1',
-    company: 'Anthropic',
-    position: 'AI Assistant',
-    period: '2024 - Present',
-    location: 'San Francisco, CA',
-    description:
-      'Helping developers worldwide write better code, design systems, and solve complex problems through natural language interaction.',
-    highlights: [
-      'Assisted thousands of developers with code reviews and debugging',
-      'Contributed to open-source documentation and tutorials',
-      'Developed expertise in modern web frameworks and best practices',
-    ],
-    technologies: ['TypeScript', 'React', 'Node.js', 'Python', 'AI/ML'],
-    current: true,
-  },
-  {
-    id: '2',
-    company: 'Tech Innovations',
-    position: 'Senior Full-Stack Developer',
-    period: '2021 - 2024',
-    location: 'Remote',
-    description:
-      'Led development of enterprise-scale applications and mentored junior developers on best practices.',
-    highlights: [
-      'Architected microservices handling 10M+ daily requests',
-      'Reduced deployment time by 60% through CI/CD optimization',
-      'Mentored team of 5 junior developers',
-    ],
-    technologies: ['Next.js', 'GraphQL', 'PostgreSQL', 'AWS', 'Docker'],
-    current: false,
-  },
-  {
-    id: '3',
-    company: 'Creative Studio',
-    position: 'UI/UX Developer',
-    period: '2019 - 2021',
-    location: 'New York, NY',
-    description:
-      'Bridged the gap between design and development, creating pixel-perfect implementations of complex designs.',
-    highlights: [
-      'Implemented design system used across 15+ products',
-      'Improved Core Web Vitals scores by 40%',
-      'Collaborated directly with design team on UX improvements',
-    ],
-    technologies: ['React', 'Figma', 'Storybook', 'CSS-in-JS', 'A11y'],
-    current: false,
-  },
-  {
-    id: '4',
-    company: 'Startup Labs',
-    position: 'Frontend Developer',
-    period: '2017 - 2019',
-    location: 'Austin, TX',
-    description:
-      'Built user-facing features for early-stage startups, working in fast-paced agile environments.',
-    highlights: [
-      'Shipped 3 products from concept to launch',
-      'Implemented real-time features using WebSockets',
-      'Optimized bundle size reducing load time by 50%',
-    ],
-    technologies: ['Vue.js', 'TypeScript', 'Firebase', 'Tailwind'],
-    current: false,
-  },
-];
+interface Props {
+  experiences: ExperienceItem[];
+}
 
-function TimelineItem({ item, index }: { item: ExperienceItem; index: number }) {
+function formatPeriod(startDate: Date, endDate?: Date, current?: boolean): string {
+  const start = startDate.getFullYear();
+  if (current) return `${start} - Present`;
+  const end = endDate ? endDate.getFullYear() : '';
+  return `${start} - ${end}`;
+}
+
+function TimelineItem({ item }: { item: ExperienceItem }) {
   return (
     <motion.div
       variants={staggerItem}
@@ -120,11 +64,7 @@ function TimelineItem({ item, index }: { item: ExperienceItem; index: number }) 
           <div className="flex flex-col items-end gap-1 text-sm text-muted-foreground">
             <span className="flex items-center gap-1">
               <Calendar className="w-4 h-4" />
-              {item.period}
-            </span>
-            <span className="flex items-center gap-1">
-              <MapPin className="w-4 h-4" />
-              {item.location}
+              {formatPeriod(item.startDate, item.endDate, item.current)}
             </span>
           </div>
         </div>
@@ -161,7 +101,7 @@ function TimelineItem({ item, index }: { item: ExperienceItem; index: number }) 
   );
 }
 
-export function Experience() {
+export function Experience({ experiences }: Props) {
   return (
     <section id="experience" className="section">
       <div className="container-custom">
@@ -184,7 +124,7 @@ export function Experience() {
           {/* Timeline */}
           <div className="max-w-3xl mx-auto">
             {experiences.map((item, index) => (
-              <TimelineItem key={item.id} item={item} index={index} />
+              <TimelineItem key={index} item={item} />
             ))}
           </div>
 

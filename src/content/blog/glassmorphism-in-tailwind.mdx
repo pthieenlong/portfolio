@@ -1,0 +1,126 @@
+---
+title: "Building Glassmorphism UI with TailwindCSS"
+description: "A practical guide to creating stunning glass-effect UI components using TailwindCSS utility classes — with accessible contrast and dark mode support."
+publishedAt: 2024-05-03
+tags: ["CSS", "TailwindCSS", "Design", "UI/UX"]
+draft: false
+---
+
+Glassmorphism is more than a trend — when done right, it creates interfaces that feel modern, layered, and premium. Here's how to implement it cleanly with TailwindCSS.
+
+## The Core Recipe
+
+Glassmorphism relies on four CSS properties:
+
+```css
+.glass {
+  background: rgba(255, 255, 255, 0.1);  /* Semi-transparent */
+  backdrop-filter: blur(12px);            /* Frosted glass blur */
+  border: 1px solid rgba(255, 255, 255, 0.2);  /* Subtle border */
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);   /* Depth */
+}
+```
+
+In Tailwind:
+
+```html
+<div class="bg-white/10 backdrop-blur-lg border border-white/20 shadow-xl">
+  Glass card content
+</div>
+```
+
+## Creating Reusable Glass Classes
+
+Add these to your `global.css`:
+
+```css
+@layer components {
+  .glass {
+    @apply bg-white/10 backdrop-blur-lg border border-white/20 shadow-xl;
+  }
+
+  .glass-card {
+    @apply bg-white/5 backdrop-blur-md border border-white/10 rounded-xl shadow-lg;
+  }
+
+  .glass-button {
+    @apply bg-white/10 backdrop-blur-sm border border-white/20
+           hover:bg-white/20 active:bg-white/30
+           transition-all duration-300;
+  }
+}
+```
+
+## Dark Mode Considerations
+
+Glass needs a colorful background to look good. In dark mode, use colored overlays:
+
+```html
+<!-- Works great on dark gradient backgrounds -->
+<div class="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+  <div class="glass rounded-2xl p-6">
+    Content here
+  </div>
+</div>
+```
+
+For light mode, increase the white opacity:
+
+```html
+<div class="bg-white/60 dark:bg-white/10 backdrop-blur-lg border border-white/40 dark:border-white/20">
+  Adapts to light/dark mode
+</div>
+```
+
+## Accessibility: The Hard Part
+
+This is where most glassmorphism implementations fail. The frosted effect can destroy text contrast.
+
+**Always check contrast ratios:**
+
+```tsx
+// Bad — text on glass might fail WCAG AA
+<div class="glass">
+  <p class="text-white/70">This might be too light</p>
+</div>
+
+// Better — use solid text on glass backgrounds
+<div class="glass">
+  <p class="text-white drop-shadow-sm">Better contrast</p>
+</div>
+```
+
+Use `text-shadow` or `drop-shadow` utilities to ensure readability regardless of background.
+
+## Practical Examples
+
+### Glass Navigation Bar
+
+```html
+<nav class="fixed top-0 w-full z-50 glass border-t-0 rounded-none border-x-0">
+  <div class="container mx-auto px-6 py-4 flex items-center justify-between">
+    <span class="font-bold text-lg">Logo</span>
+    <div class="flex gap-6">
+      <a href="#" class="hover:text-primary transition-colors">Work</a>
+      <a href="#" class="hover:text-primary transition-colors">Blog</a>
+    </div>
+  </div>
+</nav>
+```
+
+### Glass Card with Hover
+
+```html
+<div class="glass-card p-6 rounded-2xl group cursor-pointer
+            hover:bg-white/10 hover:-translate-y-1
+            transition-all duration-300">
+  <h3 class="font-semibold text-lg mb-2">Card Title</h3>
+  <p class="text-muted-foreground text-sm">Card description goes here.</p>
+</div>
+```
+
+## Performance Note
+
+`backdrop-filter: blur()` is GPU-accelerated but can be expensive with many layers. Limit stacked glass elements and avoid animating blur radius — animate opacity instead.
+
+Glassmorphism works best when it's purposeful, not decorative noise on every element. Use it to create visual hierarchy and distinguish interactive surfaces from static content.

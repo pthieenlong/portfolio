@@ -1,0 +1,84 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '@/layouts/Layout.astro';
+import { Header } from '@/components/layout/Header';
+import { Footer } from '@/components/layout/Footer';
+
+const entries = await getCollection('projects');
+const projects = entries
+  .sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf());
+
+const allTags = [...new Set(projects.flatMap((p) => p.data.tags))];
+---
+
+<Layout
+  title="Projects — Pham Thien Long"
+  description="A full list of projects I've built — web apps, design systems, open-source libraries, and more."
+>
+  <Header client:load />
+
+  <main class="pt-28 md:pt-32 pb-20">
+    <div class="container-custom">
+      <!-- Header -->
+      <div class="mb-12">
+        <h1 class="text-4xl md:text-5xl font-bold mb-4">
+          All <span class="gradient-text">Projects</span>
+        </h1>
+        <p class="text-lg text-muted-foreground max-w-2xl">
+          Things I've built, shipped, and learned from.
+        </p>
+      </div>
+
+      <!-- Tag filters -->
+      <div class="flex flex-wrap gap-2 mb-10">
+        <a
+          href="/projects"
+          class="px-4 py-2 rounded-lg text-sm font-medium bg-primary text-primary-foreground"
+        >
+          All
+        </a>
+        {allTags.map((tag) => (
+          <span class="px-4 py-2 rounded-lg text-sm font-medium glass text-muted-foreground cursor-pointer hover:text-foreground transition-colors">
+            {tag}
+          </span>
+        ))}
+      </div>
+
+      <!-- Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {projects.map((project) => (
+          <a
+            href={`/projects/${project.slug}`}
+            class="group rounded-2xl glass overflow-hidden hover:-translate-y-2 transition-transform duration-300"
+          >
+            <!-- Thumbnail placeholder -->
+            <div class="aspect-video bg-linear-to-br from-primary/20 to-accent/20 flex items-center justify-center">
+              <span class="text-5xl font-bold text-primary/20">
+                {project.data.title.charAt(0)}
+              </span>
+            </div>
+
+            <!-- Content -->
+            <div class="p-5">
+              <div class="flex flex-wrap gap-1.5 mb-3">
+                {project.data.tags.slice(0, 3).map((tag) => (
+                  <span class="px-2 py-0.5 text-xs rounded-md bg-muted text-muted-foreground">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+              <h2 class="text-lg font-semibold mb-2 group-hover:text-primary transition-colors">
+                {project.data.title}
+              </h2>
+              <p class="text-sm text-muted-foreground line-clamp-2">
+                {project.data.description}
+              </p>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </main>
+
+  <Footer client:load />
+</Layout>

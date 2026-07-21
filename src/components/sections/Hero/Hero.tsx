@@ -1,11 +1,11 @@
-import { motion } from 'framer-motion';
-import { ArrowDown, Github, Linkedin, Mail } from 'lucide-react';
-import { fadeInUp, staggerContainer } from '@/lib/animations';
+import { motion } from "framer-motion";
+import { ArrowDown, Github, Linkedin, Mail } from "lucide-react";
+import { fadeInUp, staggerContainer } from "@/lib/animations";
 
 const socialLinks = [
-  { href: 'https://github.com', icon: Github, label: 'GitHub' },
-  { href: 'https://linkedin.com', icon: Linkedin, label: 'LinkedIn' },
-  { href: 'mailto:hello@example.com', icon: Mail, label: 'Email' },
+  { href: "https://github.com", icon: Github, label: "GitHub" },
+  { href: "https://linkedin.com", icon: Linkedin, label: "LinkedIn" },
+  { href: "mailto:hello@example.com", icon: Mail, label: "Email" },
 ];
 
 export function Hero() {
@@ -43,16 +43,16 @@ export function Hero() {
             <span className="block text-muted-foreground text-lg sm:text-xl md:text-2xl font-normal mb-2">
               Hi, I'm
             </span>
-            <span className="gradient-text">Claude</span>
+            <span className="gradient-text">Pham Thien Long</span>
           </motion.h1>
 
           {/* Subtitle with typing effect style */}
           <motion.div variants={fadeInUp} className="mb-8">
             <p className="text-xl sm:text-2xl md:text-3xl text-muted-foreground font-light">
-              AI Assistant crafting
+              Software Engineer
             </p>
             <p className="text-xl sm:text-2xl md:text-3xl font-medium mt-1">
-              <span className="gradient-text">digital experiences</span>
+              <span className="gradient-text">frontend experiences</span>
             </p>
           </motion.div>
 
@@ -62,7 +62,8 @@ export function Hero() {
             className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed"
           >
             From TypeScript to system design, I help developers build beautiful,
-            functional, and scalable applications. Let's create something amazing together.
+            functional, and scalable applications. Let's create something
+            amazing together.
           </motion.p>
 
           {/* CTA Buttons */}
@@ -91,7 +92,7 @@ export function Hero() {
           {/* Social Links */}
           <motion.div
             variants={fadeInUp}
-            className="flex items-center justify-center gap-3"
+            className="flex items-center justify-center gap-3 mt-8"
           >
             {socialLinks.map((link) => {
               const Icon = link.icon;
@@ -115,16 +116,16 @@ export function Hero() {
 
         {/* Scroll indicator */}
         <motion.div
-          initial={{ opacity: 0, y: 10 }}
+          initial={{ opacity: 0, y: 70 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.5, duration: 0.5 }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2"
+          className="absolute bottom-12 left-1/2 -translate-x-1/2"
         >
           <motion.a
             href="#about"
             className="flex flex-col items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
             animate={{ y: [0, 8, 0] }}
-            transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
           >
             <span className="text-xs font-medium">Scroll to explore</span>
             <ArrowDown className="w-4 h-4" />

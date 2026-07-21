@@ -1,17 +1,48 @@
 {
   "experiences": [
     {
-      "company": "Company Name",
-      "position": "Senior Developer",
-      "startDate": "2023-01-01",
+      "company": "TechVision Corp",
+      "position": "Senior Frontend Engineer",
+      "startDate": "2023-03-01",
       "current": true,
-      "description": "Description of your role and responsibilities",
+      "description": "Lead frontend development for a SaaS platform serving 50,000+ users. Architecting scalable React applications and driving best practices across the engineering team.",
       "highlights": [
-        "Achievement or responsibility 1",
-        "Achievement or responsibility 2",
-        "Achievement or responsibility 3"
+        "Led migration from Create React App to Next.js 14, reducing initial page load by 40%",
+        "Built a design system with 50+ reusable components used across 3 products",
+        "Mentored 3 junior developers and conducted weekly code reviews",
+        "Implemented CI/CD pipelines with GitHub Actions, reducing deployment time by 60%"
       ],
-      "technologies": ["React", "TypeScript", "Node.js"]
+      "technologies": ["React", "Next.js", "TypeScript", "TailwindCSS", "GraphQL", "AWS"]
+    },
+    {
+      "company": "PixelCraft Studio",
+      "position": "Frontend Developer",
+      "startDate": "2021-06-01",
+      "endDate": "2023-02-28",
+      "current": false,
+      "description": "Developed interactive web applications and landing pages for clients across e-commerce, fintech, and healthcare industries.",
+      "highlights": [
+        "Delivered 20+ client projects with an average satisfaction score of 4.8/5",
+        "Integrated RESTful APIs and third-party services (Stripe, Twilio, Firebase)",
+        "Improved Core Web Vitals scores from 60 to 95+ for key client sites",
+        "Collaborated closely with UI/UX designers using Figma to pixel-perfect implementations"
+      ],
+      "technologies": ["React", "Vue.js", "JavaScript", "SCSS", "Node.js", "PostgreSQL"]
+    },
+    {
+      "company": "Freelance",
+      "position": "Full-Stack Developer",
+      "startDate": "2020-01-01",
+      "endDate": "2021-05-31",
+      "current": false,
+      "description": "Worked with startups and small businesses to build web applications, internal tools, and MVPs from concept to deployment.",
+      "highlights": [
+        "Built and launched 8 MVPs for early-stage startups",
+        "Developed a custom CMS for a media company managing 1,000+ articles",
+        "Implemented payment integrations for 3 e-commerce platforms",
+        "Maintained long-term relationships with 5 recurring clients"
+      ],
+      "technologies": ["React", "Node.js", "Express", "MongoDB", "Docker", "Heroku"]
     }
   ]
 }

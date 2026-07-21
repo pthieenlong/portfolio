@@ -1,0 +1,107 @@
+---
+title: "React Server Components: What They Are and When to Use Them"
+description: "A practical guide to React Server Components — how they work, what problems they solve, and how to decide when to use them vs client components."
+publishedAt: 2024-08-12
+tags: ["React", "Next.js", "Performance", "Architecture"]
+draft: false
+---
+
+React Server Components (RSC) have been one of the most talked-about additions to the React ecosystem. After building several production apps with Next.js 14's App Router, here's what I've learned.
+
+## What Are Server Components?
+
+Server Components are React components that render **exclusively on the server**. They never ship their JavaScript to the client, which means:
+
+- Zero bundle size impact
+- Direct access to databases, file systems, and secrets
+- No useState, useEffect, or browser APIs
+
+```tsx
+// This runs only on the server — no JS sent to browser
+async function UserProfile({ userId }: { userId: string }) {
+  const user = await db.users.findUnique({ where: { id: userId } });
+
+  return (
+    <div>
+      <h1>{user.name}</h1>
+      <p>{user.email}</p>
+    </div>
+  );
+}
+```
+
+## The Mental Model
+
+Think of it as a spectrum:
+
+| | Server Component | Client Component |
+|---|---|---|
+| Renders | Server only | Server + Client |
+| JS bundle | None | Included |
+| useState/useEffect | No | Yes |
+| Browser APIs | No | Yes |
+| DB/secrets access | Yes | No |
+
+## When to Use Each
+
+**Use Server Components for:**
+- Data fetching (replace `useEffect` + fetch)
+- Static content (headers, footers, article bodies)
+- Components that access environment secrets
+- Large dependencies you don't want in the bundle
+
+**Use Client Components for:**
+- Interactivity (onClick, onChange, etc.)
+- Browser APIs (localStorage, navigator)
+- Subscriptions and real-time updates
+- Anything using useState or useEffect
+
+## Common Patterns
+
+### Data Fetching Without useEffect
+
+```tsx
+// Before (client component)
+function ProductList() {
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    fetch('/api/products').then(r => r.json()).then(setProducts);
+  }, []);
+
+  return <ul>{products.map(p => <li>{p.name}</li>)}</ul>;
+}
+
+// After (server component)
+async function ProductList() {
+  const products = await db.products.findMany();
+  return <ul>{products.map(p => <li key={p.id}>{p.name}</li>)}</ul>;
+}
+```
+
+### Passing Server Data to Client Components
+
+```tsx
+// Server component fetches data
+async function ProductPage({ id }: { id: string }) {
+  const product = await db.products.findUnique({ where: { id } });
+
+  // Pass serializable data to client component
+  return <AddToCartButton product={product} />;
+}
+
+// Client component handles interaction
+'use client';
+function AddToCartButton({ product }: { product: Product }) {
+  const [added, setAdded] = useState(false);
+  return <button onClick={() => setAdded(true)}>Add to Cart</button>;
+}
+```
+
+## The Gotcha: Serialization
+
+Server components can only pass **serializable data** to client components. No functions, class instances, or Dates (unless converted to strings).
+
+## My Takeaway
+
+RSC clicked for me when I stopped thinking "should I use server or client?" and started asking "does this component need to run in the browser?" If the answer is no — make it a server component. The performance gains are real, especially for data-heavy pages.

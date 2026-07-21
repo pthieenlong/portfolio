@@ -5,82 +5,19 @@ import { fadeInUp, staggerContainer, staggerItem } from '@/lib/animations';
 import { cn } from '@/lib/utils';
 
 interface Project {
-  id: string;
+  slug: string;
   title: string;
   description: string;
-  image: string;
+  thumbnail: string;
   tags: string[];
   liveUrl?: string;
   repoUrl?: string;
   featured: boolean;
 }
 
-const projects: Project[] = [
-  {
-    id: '1',
-    title: 'Portfolio Website',
-    description:
-      'A modern portfolio built with Astro, React, and TailwindCSS featuring glassmorphism design and smooth animations.',
-    image: '/projects/portfolio.png',
-    tags: ['Astro', 'React', 'TailwindCSS', 'Framer Motion'],
-    liveUrl: '#',
-    repoUrl: '#',
-    featured: true,
-  },
-  {
-    id: '2',
-    title: 'E-Commerce Platform',
-    description:
-      'Full-stack e-commerce solution with real-time inventory, payment processing, and admin dashboard.',
-    image: '/projects/ecommerce.png',
-    tags: ['Next.js', 'TypeScript', 'Prisma', 'Stripe'],
-    liveUrl: '#',
-    repoUrl: '#',
-    featured: true,
-  },
-  {
-    id: '3',
-    title: 'Task Management App',
-    description:
-      'Collaborative task management with real-time updates, drag-and-drop, and team features.',
-    image: '/projects/taskapp.png',
-    tags: ['React', 'Node.js', 'Socket.io', 'MongoDB'],
-    liveUrl: '#',
-    repoUrl: '#',
-    featured: true,
-  },
-  {
-    id: '4',
-    title: 'AI Chat Interface',
-    description:
-      'Modern chat interface for AI conversations with markdown support and code highlighting.',
-    image: '/projects/aichat.png',
-    tags: ['React', 'TypeScript', 'OpenAI', 'Tailwind'],
-    liveUrl: '#',
-    featured: false,
-  },
-  {
-    id: '5',
-    title: 'Design System',
-    description:
-      'Comprehensive design system with components, documentation, and Figma integration.',
-    image: '/projects/designsystem.png',
-    tags: ['React', 'Storybook', 'Figma', 'CSS-in-JS'],
-    repoUrl: '#',
-    featured: false,
-  },
-  {
-    id: '6',
-    title: 'Mobile Banking App',
-    description:
-      'Secure mobile banking application with biometric auth and real-time transactions.',
-    image: '/projects/banking.png',
-    tags: ['React Native', 'TypeScript', 'Node.js', 'PostgreSQL'],
-    featured: false,
-  },
-];
-
-const filters = ['All', 'React', 'TypeScript', 'Next.js', 'Node.js'];
+interface Props {
+  projects: Project[];
+}
 
 function ProjectCard({ project }: { project: Project }) {
   return (
@@ -98,12 +35,20 @@ function ProjectCard({ project }: { project: Project }) {
         </div>
         {/* Hover overlay */}
         <div className="absolute inset-0 bg-background/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-3">
+          <motion.a
+            href={`/projects/${project.slug}`}
+            className="p-3 rounded-full bg-primary text-primary-foreground"
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <ArrowRight className="w-5 h-5" />
+          </motion.a>
           {project.liveUrl && (
             <motion.a
               href={project.liveUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="p-3 rounded-full bg-primary text-primary-foreground"
+              className="p-3 rounded-full glass"
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -153,7 +98,8 @@ function ProjectCard({ project }: { project: Project }) {
   );
 }
 
-export function Projects() {
+export function Projects({ projects }: Props) {
+  const allTags = ['All', ...Array.from(new Set(projects.flatMap((p) => p.tags)))];
   const [activeFilter, setActiveFilter] = useState('All');
 
   const filteredProjects = projects.filter((project) => {
@@ -185,7 +131,7 @@ export function Projects() {
             variants={fadeInUp}
             className="flex flex-wrap items-center justify-center gap-2 mb-12"
           >
-            {filters.map((filter) => (
+            {allTags.map((filter) => (
               <motion.button
                 key={filter}
                 onClick={() => setActiveFilter(filter)}
@@ -207,7 +153,7 @@ export function Projects() {
           <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <AnimatePresence mode="popLayout">
               {filteredProjects.map((project) => (
-                <ProjectCard key={project.id} project={project} />
+                <ProjectCard key={project.slug} project={project} />
               ))}
             </AnimatePresence>
           </motion.div>

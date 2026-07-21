@@ -1,16 +1,16 @@
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Sun, Moon } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import { useTheme } from '@/hooks/useTheme';
-import { useScrollPosition } from '@/hooks/useScrollPosition';
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Menu, X, Sun, Moon } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { useTheme } from "@/hooks/useTheme";
+import { useScrollPosition } from "@/hooks/useScrollPosition";
 
 const navItems = [
-  { href: '#about', label: 'About' },
-  { href: '#skills', label: 'Skills' },
-  { href: '#projects', label: 'Projects' },
-  { href: '#experience', label: 'Experience' },
-  { href: '#contact', label: 'Contact' },
+  { href: "#about", label: "About" },
+  { href: "#skills", label: "Skills" },
+  { href: "#projects", label: "Projects" },
+  { href: "#experience", label: "Experience" },
+  { href: "#contact", label: "Contact" },
 ];
 
 export function Header() {
@@ -18,16 +18,16 @@ export function Header() {
   const { theme, toggleTheme, mounted: themeMounted } = useTheme();
   const { isAtTop, direction } = useScrollPosition();
 
-  const isVisible = isAtTop || direction === 'up';
+  const isVisible = isAtTop || direction === "up";
 
   useEffect(() => {
     if (mobileMenuOpen) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = '';
+      document.body.style.overflow = "";
     }
     return () => {
-      document.body.style.overflow = '';
+      document.body.style.overflow = "";
     };
   }, [mobileMenuOpen]);
 
@@ -38,8 +38,8 @@ export function Header() {
         animate={{ y: isVisible ? 0 : -100 }}
         transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
         className={cn(
-          'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
-          !isAtTop && 'glass'
+          "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
+          !isAtTop && "glass",
         )}
       >
         <nav className="container-custom">
@@ -52,9 +52,9 @@ export function Header() {
               whileTap={{ scale: 0.98 }}
             >
               <div className="w-8 h-8 rounded-lg bg-linear-to-br from-primary to-accent flex items-center justify-center text-primary-foreground text-sm font-bold">
-                C
+                L
               </div>
-              <span className="hidden sm:inline gradient-text">Claude</span>
+              <span className="hidden sm:inline gradient-text">Long</span>
             </motion.a>
 
             {/* Desktop Navigation */}
@@ -91,7 +91,7 @@ export function Header() {
                       exit={{ opacity: 0, rotate: 90, scale: 0 }}
                       transition={{ duration: 0.2 }}
                     >
-                      {theme === 'dark' ? (
+                      {theme === "dark" ? (
                         <Sun className="w-5 h-5" />
                       ) : (
                         <Moon className="w-5 h-5" />
@@ -111,7 +111,7 @@ export function Header() {
               >
                 <AnimatePresence mode="wait">
                   <motion.div
-                    key={mobileMenuOpen ? 'close' : 'open'}
+                    key={mobileMenuOpen ? "close" : "open"}
                     initial={{ opacity: 0, rotate: -90 }}
                     animate={{ opacity: 1, rotate: 0 }}
                     exit={{ opacity: 0, rotate: 90 }}

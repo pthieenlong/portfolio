@@ -1,11 +1,11 @@
-import { motion } from 'framer-motion';
-import { Github, Linkedin, Twitter, Mail, Heart } from 'lucide-react';
+import { motion } from "framer-motion";
+import { Github, Linkedin, Twitter, Mail, Heart } from "lucide-react";
 
 const socialLinks = [
-  { href: 'https://github.com', icon: Github, label: 'GitHub' },
-  { href: 'https://linkedin.com', icon: Linkedin, label: 'LinkedIn' },
-  { href: 'https://twitter.com', icon: Twitter, label: 'Twitter' },
-  { href: 'mailto:hello@example.com', icon: Mail, label: 'Email' },
+  { href: "https://github.com/pthieenlong", icon: Github, label: "GitHub" },
+  { href: "https://linkedin.com", icon: Linkedin, label: "LinkedIn" },
+  // { href: 'https://twitter.com', icon: Twitter, label: 'Twitter' },
+  { href: "mailto:longpt.dev@gmail.com", icon: Mail, label: "Email" },
 ];
 
 export function Footer() {
@@ -26,10 +26,10 @@ export function Footer() {
               <div className="w-6 h-6 rounded-md bg-linear-to-br from-primary to-accent flex items-center justify-center text-primary-foreground text-xs font-bold">
                 C
               </div>
-              <span className="gradient-text">Claude</span>
+              <span className="gradient-text">Pham Thien Long</span>
             </motion.a>
             <p className="text-sm text-muted-foreground">
-              AI Assistant & Developer
+              Frontend Developer - Software Engineer
             </p>
           </div>
 
@@ -58,7 +58,7 @@ export function Footer() {
           <div className="flex items-center gap-1 text-sm text-muted-foreground">
             <span>&copy; {currentYear} Made with</span>
             <Heart className="w-4 h-4 text-red-500 fill-red-500" />
-            <span>by Claude</span>
+            <span>by Long</span>
           </div>
         </div>
 

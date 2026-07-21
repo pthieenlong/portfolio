@@ -1,0 +1,103 @@
+---
+import Layout from './Layout.astro';
+import { Header } from '@/components/layout/Header';
+import { Footer } from '@/components/layout/Footer';
+import { ArrowLeft, ExternalLink, Github } from 'lucide-react';
+
+interface Props {
+  title: string;
+  description: string;
+  tags: string[];
+  liveUrl?: string;
+  repoUrl?: string;
+  publishedAt: Date;
+}
+
+const { title, description, tags, liveUrl, repoUrl, publishedAt } = Astro.props;
+
+const formattedDate = publishedAt.toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+});
+---
+
+<Layout title={`${title} — Projects`} description={description}>
+  <Header client:load />
+
+  <main class="pt-28 md:pt-32 pb-20">
+    <div class="container-custom max-w-4xl">
+      <!-- Back link -->
+      <a
+        href="/projects"
+        class="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-8"
+      >
+        <ArrowLeft className="w-4 h-4" />
+        All Projects
+      </a>
+
+      <!-- Header -->
+      <div class="mb-10">
+        <div class="flex flex-wrap gap-2 mb-4">
+          {tags.map((tag) => (
+            <span class="px-2 py-1 text-xs rounded-md bg-primary/10 text-primary">
+              {tag}
+            </span>
+          ))}
+        </div>
+
+        <h1 class="text-4xl md:text-5xl font-bold mb-4">{title}</h1>
+        <p class="text-lg text-muted-foreground mb-6">{description}</p>
+
+        <div class="flex flex-wrap items-center gap-4">
+          <span class="text-sm text-muted-foreground">{formattedDate}</span>
+
+          <div class="flex gap-3">
+            {liveUrl && (
+              <a
+                href={liveUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-primary text-primary-foreground text-sm font-medium hover:opacity-90 transition-opacity"
+              >
+                <ExternalLink className="w-4 h-4" />
+                Live Demo
+              </a>
+            )}
+            {repoUrl && (
+              <a
+                href={repoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-2 px-4 py-2 rounded-lg glass text-sm font-medium hover:bg-white/10 transition-colors"
+              >
+                <Github className="w-4 h-4" />
+                Source Code
+              </a>
+            )}
+          </div>
+        </div>
+      </div>
+
+      <!-- Divider -->
+      <div class="h-px bg-border mb-10" />
+
+      <!-- MDX Content -->
+      <article class="prose prose-invert prose-lg max-w-none
+        prose-headings:font-semibold prose-headings:text-foreground
+        prose-p:text-muted-foreground prose-p:leading-relaxed
+        prose-a:text-primary prose-a:no-underline hover:prose-a:underline
+        prose-code:text-accent prose-code:bg-muted prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded
+        prose-pre:bg-muted prose-pre:border prose-pre:border-border
+        prose-strong:text-foreground
+        prose-li:text-muted-foreground
+        prose-table:text-sm
+        prose-th:text-foreground prose-th:font-semibold
+        prose-td:text-muted-foreground
+      ">
+        <slot />
+      </article>
+    </div>
+  </main>
+
+  <Footer client:load />
+</Layout>
