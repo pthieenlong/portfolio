@@ -3,12 +3,13 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ExternalLink, Github, ArrowRight } from 'lucide-react';
 import { fadeInUp, staggerContainer, staggerItem } from '@/lib/animations';
 import { cn } from '@/lib/utils';
+import { withBase } from '@/lib/constants';
 
 interface Project {
   slug: string;
   title: string;
   description: string;
-  thumbnail: string;
+  thumbnail?: string;
   tags: string[];
   liveUrl?: string;
   repoUrl?: string;
@@ -36,7 +37,7 @@ function ProjectCard({ project }: { project: Project }) {
         {/* Hover overlay */}
         <div className="absolute inset-0 bg-background/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-3">
           <motion.a
-            href={`/projects/${project.slug}`}
+            href={withBase(`/projects/${project.slug}`)}
             className="p-3 rounded-full bg-primary text-primary-foreground"
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
@@ -99,7 +100,17 @@ function ProjectCard({ project }: { project: Project }) {
 }
 
 export function Projects({ projects }: Props) {
-  const allTags = ['All', ...Array.from(new Set(projects.flatMap((p) => p.tags)))];
+  // Only offer filters that match 2+ projects; one-off tags add noise.
+  const tagCounts = projects
+    .flatMap((p) => p.tags)
+    .reduce<Record<string, number>>((acc, tag) => {
+      acc[tag] = (acc[tag] ?? 0) + 1;
+      return acc;
+    }, {});
+  const allTags = [
+    'All',
+    ...Object.keys(tagCounts).filter((tag) => tagCounts[tag] >= 2),
+  ];
   const [activeFilter, setActiveFilter] = useState('All');
 
   const filteredProjects = projects.filter((project) => {
@@ -122,7 +133,7 @@ export function Projects({ projects }: Props) {
               Featured <span className="gradient-text">Projects</span>
             </h2>
             <p className="section-subtitle max-w-2xl mx-auto">
-              A selection of projects I've worked on, from web apps to design systems
+              Things I've built: open-source tools, SaaS dashboards, CMSs and a game
             </p>
           </motion.div>
 
@@ -161,7 +172,7 @@ export function Projects({ projects }: Props) {
           {/* View all button */}
           <motion.div variants={fadeInUp} className="text-center mt-12">
             <motion.a
-              href="/projects"
+              href={withBase("/projects")}
               className="inline-flex items-center gap-2 px-6 py-3 rounded-xl glass glass-hover font-medium"
               whileHover={{ scale: 1.02, x: 4 }}
               whileTap={{ scale: 0.98 }}

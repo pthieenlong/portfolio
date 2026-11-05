@@ -55,12 +55,20 @@ npm run build
 npm run preview
 ```
 
-## Customization
+## Editing content
 
-1. Update personal info in `src/lib/constants.ts`
-2. Modify projects in `src/components/sections/Projects/Projects.tsx`
-3. Update experience in `src/components/sections/Experience/Experience.tsx`
-4. Change theme colors in `src/styles/global.css`
+1. Personal info & social links: `src/lib/constants.ts`
+2. Projects: one MDX file per project in `src/content/projects/`
+3. Experience timeline: `src/content/experience/experiences.json`
+4. Blog posts: `src/content/blog/` (`draft: true` hides a post)
+5. Theme colors: `src/styles/global.css`
+
+## Deploy
+
+Pushing to `main` builds and deploys to GitHub Pages via `.github/workflows/deploy.yml`:
+https://pthieenlong.github.io/portfolio
+
+The site uses `base: '/portfolio'`, so internal links must go through `withBase()` from `src/lib/constants.ts`.
 
 ## Adding Shadcn Components
 

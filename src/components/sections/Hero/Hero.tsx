@@ -1,12 +1,9 @@
 import { motion } from "framer-motion";
-import { ArrowDown, Github, Linkedin, Mail } from "lucide-react";
+import { ArrowDown } from "lucide-react";
 import { fadeInUp, staggerContainer } from "@/lib/animations";
+import { SOCIAL_ITEMS } from "@/lib/social";
 
-const socialLinks = [
-  { href: "https://github.com", icon: Github, label: "GitHub" },
-  { href: "https://linkedin.com", icon: Linkedin, label: "LinkedIn" },
-  { href: "mailto:hello@example.com", icon: Mail, label: "Email" },
-];
+const socialLinks = SOCIAL_ITEMS;
 
 export function Hero() {
   return (
@@ -31,7 +28,7 @@ export function Hero() {
               <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
             </span>
             <span className="text-sm text-muted-foreground">
-              Available for collaboration
+              Based in Ho Chi Minh City · Open to opportunities
             </span>
           </motion.div>
 
@@ -49,10 +46,10 @@ export function Hero() {
           {/* Subtitle with typing effect style */}
           <motion.div variants={fadeInUp} className="mb-8">
             <p className="text-xl sm:text-2xl md:text-3xl text-muted-foreground font-light">
-              Software Engineer
+              Frontend Developer
             </p>
             <p className="text-xl sm:text-2xl md:text-3xl font-medium mt-1">
-              <span className="gradient-text">frontend experiences</span>
+              who cares about the <span className="gradient-text">product behind the code</span>
             </p>
           </motion.div>
 
@@ -61,9 +58,10 @@ export function Hero() {
             variants={fadeInUp}
             className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed"
           >
-            From TypeScript to system design, I help developers build beautiful,
-            functional, and scalable applications. Let's create something
-            amazing together.
+            I build web apps with React, Next.js and NestJS — from admin
+            dashboards and multi-tenant SaaS to an MCP server and a tiny
+            mobile game. I like asking "why are we building this?" before
+            asking "how?".
           </motion.p>
 
           {/* CTA Buttons */}

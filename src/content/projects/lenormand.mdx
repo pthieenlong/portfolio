@@ -1,0 +1,26 @@
+---
+title: "Lenormand — Card Reading App"
+description: "A Vietnamese Lenormand card reading web app: a daily card, 3-card spreads read as a story, and a searchable deck, with smooth 3D card flips."
+tags: ["React", "TypeScript", "Vite", "TailwindCSS", "Framer Motion", "React Router"]
+repoUrl: "https://github.com/pthieenlong/lenormand"
+featured: false
+publishedAt: 2026-06-22
+---
+
+## Overview
+
+A client-only web app for the 36-card Lenormand deck, in Vietnamese. For reflection and fun, not real advice.
+
+## Features
+
+- **Card of the day**: draw one card to set the tone for the day.
+- **3-card spread**: cards flip one by one and read left to right as a story.
+- **Deck**: browse all 36 meanings and search by name or keyword.
+- 3D card flip animations with Framer Motion.
+- Automatic dark mode and `prefers-reduced-motion` support.
+
+## Technical notes
+
+- No backend; all card content lives in a single typed data file (`src/data/cards.ts`), so editing a meaning never touches UI code.
+- Shuffle and draw logic isolated in `lib/draw.ts`.
+- Dockerfile + nginx config for static hosting.

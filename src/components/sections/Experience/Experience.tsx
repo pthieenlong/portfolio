@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Briefcase, Calendar } from 'lucide-react';
+import { Calendar } from 'lucide-react';
 import { fadeInUp, staggerContainer, staggerItem } from '@/lib/animations';
 import { cn } from '@/lib/utils';
 
@@ -114,10 +114,10 @@ export function Experience({ experiences }: Props) {
           {/* Section header */}
           <motion.div variants={fadeInUp} className="text-center mb-16">
             <h2 className="section-title">
-              Work <span className="gradient-text">Experience</span>
+              My <span className="gradient-text">Journey</span>
             </h2>
             <p className="section-subtitle max-w-2xl mx-auto">
-              My professional journey through the tech industry
+              From self-taught game dev to frontend developer
             </p>
           </motion.div>
 
@@ -128,19 +128,6 @@ export function Experience({ experiences }: Props) {
             ))}
           </div>
 
-          {/* Download CV button */}
-          <motion.div variants={fadeInUp} className="text-center mt-12">
-            <motion.a
-              href="/cv.pdf"
-              download
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-linear-to-r from-primary to-accent text-primary-foreground font-medium"
-              whileHover={{ scale: 1.02, y: -2 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <Briefcase className="w-4 h-4" />
-              Download Resume
-            </motion.a>
-          </motion.div>
         </motion.div>
       </div>
     </section>

@@ -1,67 +1,60 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import {
-  Send,
-  Mail,
-  MapPin,
-  Github,
-  Linkedin,
-  Twitter,
-  CheckCircle,
-  Loader2,
-} from 'lucide-react';
+import { Send, Mail, MapPin, CheckCircle } from 'lucide-react';
 import { fadeInUp, staggerContainer } from '@/lib/animations';
 import { cn } from '@/lib/utils';
+import { SITE_CONFIG, SOCIAL_LINKS } from '@/lib/constants';
+import { SOCIAL_ITEMS } from '@/lib/social';
+
+interface FormState {
+  name: string;
+  email: string;
+  message: string;
+}
+
+const INITIAL_FORM: FormState = { name: '', email: '', message: '' };
 
 const contactInfo = [
   {
     icon: Mail,
     label: 'Email',
-    value: 'hello@claude.dev',
-    href: 'mailto:hello@claude.dev',
+    value: SOCIAL_LINKS.email,
+    href: `mailto:${SOCIAL_LINKS.email}`,
   },
   {
     icon: MapPin,
     label: 'Location',
-    value: 'San Francisco, CA',
+    value: SITE_CONFIG.location,
     href: null,
   },
 ];
 
-const socialLinks = [
-  { icon: Github, href: 'https://github.com', label: 'GitHub' },
-  { icon: Linkedin, href: 'https://linkedin.com', label: 'LinkedIn' },
-  { icon: Twitter, href: 'https://twitter.com', label: 'Twitter' },
-];
+const socialLinks = SOCIAL_ITEMS;
+
+/**
+ * Static site (GitHub Pages) has no backend, so the form hands off to the
+ * visitor's mail client with subject/body prefilled instead of faking a send.
+ */
+function buildMailtoUrl({ name, email, message }: FormState): string {
+  const subject = `Portfolio contact from ${name}`;
+  const body = `${message}\n\n— ${name} (${email})`;
+  return `mailto:${SOCIAL_LINKS.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+}
 
 export function Contact() {
-  const [formState, setFormState] = useState({
-    name: '',
-    email: '',
-    message: '',
-  });
-  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>(
-    'idle'
-  );
+  const [formState, setFormState] = useState<FormState>(INITIAL_FORM);
+  const [opened, setOpened] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
-    setStatus('loading');
-
-    // Simulate form submission
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    setStatus('success');
-
-    // Reset form after success
-    setTimeout(() => {
-      setFormState({ name: '', email: '', message: '' });
-      setStatus('idle');
-    }, 3000);
+    window.location.href = buildMailtoUrl(formState);
+    setOpened(true);
   };
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
+  ): void => {
+    setOpened(false);
     setFormState((prev) => ({
       ...prev,
       [e.target.name]: e.target.value,
@@ -83,7 +76,7 @@ export function Contact() {
               Get In <span className="gradient-text">Touch</span>
             </h2>
             <p className="section-subtitle max-w-2xl mx-auto">
-              Have a project in mind or just want to chat? Feel free to reach out!
+              Hiring, collaborating, or just want to talk shop? Reach out.
             </p>
           </motion.div>
 
@@ -93,10 +86,9 @@ export function Contact() {
               <div>
                 <h3 className="text-xl font-semibold mb-4">Let's connect</h3>
                 <p className="text-muted-foreground leading-relaxed">
-                  I'm always interested in hearing about new projects, creative
-                  ideas, or opportunities to be part of your visions. Whether you
-                  need help with a complex problem or just want to say hi, my inbox
-                  is always open.
+                  I'm open to frontend / full-stack roles, Odoo projects, and
+                  conversations about building products. Email is the fastest
+                  way to reach me.
                 </p>
               </div>
 
@@ -136,7 +128,7 @@ export function Contact() {
               {/* Social links */}
               <div>
                 <p className="text-sm text-muted-foreground mb-4">
-                  Find me on social media
+                  Find me online
                 </p>
                 <div className="flex gap-3">
                   {socialLinks.map((link) => {
@@ -182,7 +174,7 @@ export function Contact() {
                     onChange={handleChange}
                     required
                     className="w-full px-4 py-3 rounded-xl bg-muted/50 border border-border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
-                    placeholder="John Doe"
+                    placeholder="Your name"
                   />
                 </div>
 
@@ -202,7 +194,7 @@ export function Contact() {
                     onChange={handleChange}
                     required
                     className="w-full px-4 py-3 rounded-xl bg-muted/50 border border-border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
-                    placeholder="john@example.com"
+                    placeholder="you@company.com"
                   />
                 </div>
 
@@ -222,43 +214,34 @@ export function Contact() {
                     required
                     rows={5}
                     className="w-full px-4 py-3 rounded-xl bg-muted/50 border border-border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all resize-none"
-                    placeholder="Tell me about your project..."
+                    placeholder="What would you like to talk about?"
                   />
                 </div>
 
                 {/* Submit button */}
                 <motion.button
                   type="submit"
-                  disabled={status === 'loading' || status === 'success'}
                   className={cn(
                     'w-full py-3 px-6 rounded-xl font-medium flex items-center justify-center gap-2 transition-all',
-                    status === 'success'
-                      ? 'bg-green-500 text-white'
-                      : 'bg-linear-to-r from-primary to-accent text-primary-foreground hover:opacity-90'
+                    'bg-linear-to-r from-primary to-accent text-primary-foreground hover:opacity-90'
                   )}
-                  whileHover={{ scale: status === 'idle' ? 1.02 : 1 }}
-                  whileTap={{ scale: status === 'idle' ? 0.98 : 1 }}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
                 >
-                  {status === 'loading' && (
-                    <>
-                      <Loader2 className="w-4 h-4 animate-spin" />
-                      Sending...
-                    </>
-                  )}
-                  {status === 'success' && (
-                    <>
-                      <CheckCircle className="w-4 h-4" />
-                      Message Sent!
-                    </>
-                  )}
-                  {status === 'idle' && (
-                    <>
-                      <Send className="w-4 h-4" />
-                      Send Message
-                    </>
-                  )}
-                  {status === 'error' && 'Try Again'}
+                  <Send className="w-4 h-4" />
+                  Open in Email App
                 </motion.button>
+                <p className="text-xs text-muted-foreground text-center" aria-live="polite">
+                  {opened ? (
+                    <span className="inline-flex items-center gap-1">
+                      <CheckCircle className="w-3 h-3" />
+                      Your email app should open with this message. If it
+                      didn&apos;t, email me at {SOCIAL_LINKS.email}.
+                    </span>
+                  ) : (
+                    'This opens your email app with the message prefilled.'
+                  )}
+                </p>
               </form>
             </motion.div>
           </div>

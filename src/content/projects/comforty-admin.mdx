@@ -1,0 +1,36 @@
+---
+title: "Comforty Admin — Multi-tenant SaaS"
+description: "A multi-tenant admin system for a furniture store chain, with role-based access across branches: orders, products, inventory, staff and CMS."
+tags: ["React", "TypeScript", "Vite", "Chakra UI", "TanStack Router", "Zod"]
+repoUrl: "https://github.com/pthieenlong/saas-management-template"
+featured: false
+publishedAt: 2026-03-28
+---
+
+## Overview
+
+Comforty Admin manages a chain of furniture stores. It's built **multi-tenant**: each branch is isolated, while chain admins see everything.
+
+## Roles (RBAC)
+
+| Role | Scope | Can do |
+|---|---|---|
+| Staff | One store | View and process orders, view products |
+| Store Manager | One store | All store operations, manage staff |
+| Admin | Whole chain | All branches, configuration, consolidated reports |
+
+## Modules
+
+- **Dashboard**: overview per role (revenue, orders, inventory)
+- **Orders**: create, view, update status
+- **Products & Categories**: CRUD, attributes, images, category tree
+- **Inventory**: stock per branch
+- **Content**: posts and tags for the store website
+- **Staff & Stores**: accounts, permissions, branch info and opening hours
+- **Settings**: per-tenant configuration
+
+## Technical choices
+
+- React 19 + Vite 8, Chakra UI v3, TanStack Router (file-based routes), React Hook Form + Zod.
+- Feature-scoped folders (`pages/<feature>/components|hooks|schemas`) so a module can be changed without touching others.
+- Architecture, ERD and code rules documented in `docs/` before building screens.

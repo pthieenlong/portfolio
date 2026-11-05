@@ -1,0 +1,43 @@
+---
+title: "MangaReader — Graduation Project"
+description: "An online manga platform with paid chapters, built as a team. I led the team and built the admin CMS and publisher CMS in React 19."
+tags: ["React", "TypeScript", "Vite", "Zustand", "Ant Design", "TailwindCSS", "Docker"]
+repoUrl: "https://github.com/pthieenlong/mangareader-cms"
+featured: true
+publishedAt: 2025-12-23
+---
+
+## Overview
+
+MangaReader is our FPT Polytechnic graduation project: a platform to discover, read, rate and buy manga, with free chapter previews. I was the **team leader**.
+
+## My part
+
+I built two of the frontends:
+
+- **Admin CMS** ([repo](https://github.com/pthieenlong/mangareader-cms)): manage users, publishers, books, chapters, categories and orders; approve users who apply to become publishers.
+- **Publisher CMS** ([repo](https://github.com/pthieenlong/datn-publisher-cms)): lets publishers manage their own titles and chapters.
+
+## System
+
+| Part | Role |
+|---|---|
+| Reader web app | End-user reading experience |
+| Admin & Publisher CMS | Content and business management |
+| REST API | Data, auth and permissions (JWT) |
+| PostgreSQL | Books, chapters, users, orders, notifications |
+| CDN | Chapter images |
+
+Roles: **USER / ADMIN / PUBLISHER**.
+
+## Technical choices
+
+- React 19 + Vite, Zustand for state, Ant Design / Tailwind for UI, zod + react-hook-form for forms.
+- **Container / Presentational** split: pages fetch data and handle loading/error states; child components only render props.
+- Feature folders (`features/book`, `features/user`...) each owning their components, hooks, services and types.
+- One shared axios instance with base URL from env, retries on 5xx and timeouts.
+- Dockerfile + a VPS deploy script.
+
+## What I learned as team leader
+
+Writing down code rules and an API contract (`API_ENDPOINT.json`, `CODE_RULES.md`) early saved more time than any library choice. It let frontend and backend work in parallel.

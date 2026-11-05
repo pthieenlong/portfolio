@@ -2,16 +2,14 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Sun, Moon } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { NAV_LINKS, withBase } from "@/lib/constants";
 import { useTheme } from "@/hooks/useTheme";
 import { useScrollPosition } from "@/hooks/useScrollPosition";
 
-const navItems = [
-  { href: "#about", label: "About" },
-  { href: "#skills", label: "Skills" },
-  { href: "#projects", label: "Projects" },
-  { href: "#experience", label: "Experience" },
-  { href: "#contact", label: "Contact" },
-];
+const navItems = NAV_LINKS.map((link) => ({
+  ...link,
+  href: withBase(link.href),
+}));
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -46,7 +44,7 @@ export function Header() {
           <div className="flex items-center justify-between h-16 md:h-20">
             {/* Logo */}
             <motion.a
-              href="/"
+              href={withBase("/")}
               className="relative z-10 flex items-center gap-2 text-xl font-bold"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}

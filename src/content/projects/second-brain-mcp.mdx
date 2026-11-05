@@ -1,0 +1,39 @@
+---
+title: "Second Brain MCP"
+description: "An MCP server that lets AI assistants capture, tag and search your notes as plain Markdown files in an Obsidian-compatible vault. Published on npm."
+tags: ["NestJS", "TypeScript", "Prisma", "SQLite", "MCP"]
+repoUrl: "https://github.com/pthieenlong/second-brain-mcp"
+featured: true
+publishedAt: 2026-07-24
+---
+
+## Overview
+
+Second Brain MCP is a [Model Context Protocol](https://modelcontextprotocol.io) server. You chat with your AI client as usual, and when something is worth keeping you ask it to save it. The AI picks a category, adds tags and writes a `.md` file into your notes folder. Later you just ask it to find things.
+
+It's published as `@pthieenlong/second-brain-mcp` on npm and runs with a single `npx` line in Claude Desktop, Cursor or any MCP-capable client.
+
+## Problem
+
+Useful answers from AI chats get lost in chat history. Existing note tools either lock notes into their own format or need manual filing.
+
+## Design decisions
+
+- **Markdown files are the source of truth.** Notes live in `VAULT_PATH/<category>/` with YAML front matter, so they stay readable in Obsidian, `grep` or any editor, with or without this tool.
+- **The index is derived data.** A small SQLite index (via Prisma) speeds up search. Deleting it is safe because it can be rebuilt with `reindex_vault`.
+- **NestJS modules per concern:** `mcp`, `storage`, `note-index`, `flow` and `prisma`, each with one job.
+
+## Tools exposed to the AI
+
+| Tool | What it does |
+|---|---|
+| `capture_note` | Save a new note; the AI chooses category and tags |
+| `search_notes` | Search by title keyword, category or tag |
+| `get_note` | Read a full note |
+| `update_note` | Edit a note; moves the file if title or category changes |
+| `delete_note` | Remove a note from disk and index |
+| `reindex_vault` | Rescan the folder and rebuild the index |
+
+## What I learned
+
+Designing a tool for an AI to call is closer to API product design than to UI work: tool names, descriptions and failure messages are the "UX", and keeping the user's data in an open format builds trust.

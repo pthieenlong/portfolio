@@ -32,11 +32,11 @@ function BentoCard({ className, children, delay = 0 }: BentoCardProps) {
   );
 }
 
-const skills = [
-  { name: "TypeScript", level: 95 },
-  { name: "React", level: 92 },
-  { name: "Node.js", level: 88 },
-  { name: "Python", level: 90 },
+const focusAreas = [
+  { name: "Frontend", detail: "React, Next.js (App Router), TailwindCSS, Zustand" },
+  { name: "Backend", detail: "NestJS, Prisma, PostgreSQL, Redis" },
+  { name: "Tooling", detail: "Docker, GitHub Actions, Vite, MCP" },
+  { name: "Learning now", detail: "Odoo (Python), SQL indexing, product thinking" },
 ];
 
 const techStack = [
@@ -105,26 +105,10 @@ const techStack = [
     ),
   },
   {
-    name: "GraphQL",
-    icon: (
-      <svg viewBox="0 0 24 24" className="w-8 h-8" fill="currentColor">
-        <path d="M12.002 0a2.138 2.138 0 1 0 0 4.277 2.138 2.138 0 1 0 0-4.277zm8.54 4.931a2.138 2.138 0 1 0 0 4.277 2.138 2.138 0 1 0 0-4.277zm0 9.862a2.138 2.138 0 1 0 0 4.277 2.138 2.138 0 1 0 0-4.277zm-8.54 4.931a2.138 2.138 0 1 0 0 4.276 2.138 2.138 0 1 0 0-4.276zm-8.542-4.93a2.138 2.138 0 1 0 0 4.276 2.138 2.138 0 1 0 0-4.277zm0-9.863a2.138 2.138 0 1 0 0 4.277 2.138 2.138 0 1 0 0-4.277zm8.542-3.378L2.953 6.777v10.448l9.049 5.224 9.049-5.224V6.777zm0 1.601 7.387 4.265v8.53l-7.387 4.265-7.387-4.265v-8.53z" />
-      </svg>
-    ),
-  },
-  {
     name: "Redis",
     icon: (
       <svg viewBox="0 0 24 24" className="w-8 h-8" fill="currentColor">
         <path d="M10.5 2.661l.54.997-1.797.644 2.409.218.748 1.246.467-1.122 2.077-.208-1.61-.613.426-1.104-1.397.665zm6.538 3.12v2.027l2.606 1.044-2.606 1.058V11.9l-2.974-1.404v2.063L12 13.574l-2.063-1.014v-2.063L6.963 11.9V9.873L4.419 8.852l2.544-1.033V5.781l2.974 1.404V5.061L12 4.003l2.063 1.058v2.124zm-3.507 6.406l2.07 1.015v2.062l2.972-1.403v2.092l-5.042 2.46-5.042-2.46V13.86l2.972 1.404v-2.063z" />
-      </svg>
-    ),
-  },
-  {
-    name: "AWS",
-    icon: (
-      <svg viewBox="0 0 24 24" className="w-8 h-8" fill="currentColor">
-        <path d="M6.763 10.036c0 .296.032.535.088.71.064.176.144.368.256.576.04.063.056.127.056.183 0 .08-.048.16-.152.24l-.503.335a.383.383 0 0 1-.208.072c-.08 0-.16-.04-.239-.112a2.47 2.47 0 0 1-.287-.374 6.18 6.18 0 0 1-.248-.47c-.622.734-1.405 1.101-2.347 1.101-.67 0-1.205-.191-1.596-.574-.391-.384-.59-.894-.59-1.533 0-.678.239-1.23.726-1.644.487-.415 1.133-.623 1.955-.623.272 0 .551.024.846.064.296.04.6.104.918.176v-.583c0-.607-.127-1.03-.375-1.277-.255-.248-.686-.367-1.3-.367-.28 0-.568.032-.863.104-.296.072-.583.16-.863.272a2.287 2.287 0 0 1-.28.104.488.488 0 0 1-.127.023c-.112 0-.168-.08-.168-.247v-.391c0-.128.016-.224.056-.28a.597.597 0 0 1 .224-.167c.279-.144.614-.264 1.005-.36a4.84 4.84 0 0 1 1.246-.151c.95 0 1.644.216 2.091.647.44.43.662 1.085.662 1.963v2.586zm-3.24 1.214c.263 0 .534-.048.822-.144.287-.096.543-.271.758-.51.128-.152.224-.32.272-.512.047-.191.08-.423.08-.694v-.335a6.66 6.66 0 0 0-.735-.136 6.02 6.02 0 0 0-.75-.048c-.535 0-.926.104-1.19.32-.263.215-.39.518-.39.917 0 .375.095.655.295.846.191.2.47.296.838.296zm6.41.862c-.144 0-.24-.024-.304-.08-.064-.048-.12-.16-.168-.311L7.586 5.55a1.398 1.398 0 0 1-.072-.32c0-.128.064-.2.191-.2h.783c.151 0 .255.025.31.08.065.048.113.16.16.312l1.342 5.284 1.245-5.284c.04-.16.088-.264.151-.312a.549.549 0 0 1 .32-.08h.638c.152 0 .256.025.32.08.063.048.12.16.151.312l1.261 5.348 1.381-5.348c.048-.16.104-.264.16-.312a.52.52 0 0 1 .311-.08h.743c.127 0 .2.065.2.2 0 .04-.009.08-.017.128a1.137 1.137 0 0 1-.056.2l-1.923 6.17c-.048.16-.104.264-.168.312a.532.532 0 0 1-.303.08h-.687c-.151 0-.255-.024-.32-.08-.063-.056-.119-.16-.15-.32l-1.238-5.148-1.23 5.14c-.04.16-.087.264-.15.32-.065.056-.177.08-.32.08zm10.256.215c-.415 0-.83-.048-1.229-.143-.399-.096-.71-.2-.918-.32-.128-.071-.215-.151-.247-.223a.563.563 0 0 1-.048-.224v-.407c0-.167.064-.247.183-.247.048 0 .096.008.144.024.048.016.12.048.2.08.271.12.566.215.878.279.319.064.63.096.95.096.502 0 .894-.088 1.165-.264a.86.86 0 0 0 .415-.758.777.777 0 0 0-.215-.559c-.144-.151-.416-.287-.807-.415l-1.157-.36c-.583-.183-1.014-.454-1.277-.813a1.902 1.902 0 0 1-.4-1.158c0-.335.073-.63.216-.886.144-.255.336-.479.575-.654.24-.184.51-.32.83-.415a3.62 3.62 0 0 1 1.013-.135c.183 0 .375.008.559.032.191.024.367.056.534.096.16.04.312.08.455.127.144.048.256.096.336.144a.69.69 0 0 1 .24.2.43.43 0 0 1 .071.263v.375c0 .168-.064.256-.184.256a.83.83 0 0 1-.303-.096 3.652 3.652 0 0 0-1.532-.311c-.455 0-.815.071-1.062.223-.248.152-.375.383-.375.694 0 .224.08.416.24.567.159.152.454.304.878.44l1.134.358c.574.184.99.44 1.237.767.247.327.367.702.367 1.117 0 .343-.072.655-.207.926-.144.272-.336.511-.583.703-.248.2-.543.343-.886.447-.36.111-.734.167-1.142.167zM21.698 16.207c-2.626 1.94-6.442 2.969-9.722 2.969-4.598 0-8.74-1.7-11.87-4.526-.247-.223-.024-.527.272-.351 3.384 1.963 7.559 3.153 11.877 3.153 2.914 0 6.114-.607 9.06-1.852.439-.2.814.287.383.607zM22.792 14.961c-.336-.43-2.22-.207-3.074-.103-.255.032-.295-.192-.063-.36 1.5-1.053 3.967-.75 4.254-.399.287.36-.08 2.826-1.485 4.007-.215.184-.423.088-.327-.151.319-.79 1.03-2.57.695-2.994z" />
       </svg>
     ),
   },
@@ -154,8 +138,8 @@ export function BentoGrid() {
               About <span className="gradient-text">Me</span>
             </h2>
             <p className="section-subtitle max-w-2xl mx-auto">
-              A passionate developer and designer who loves creating digital
-              experiences
+              A frontend developer with a soft spot for product and business
+              problems
             </p>
           </motion.div>
 
@@ -172,25 +156,21 @@ export function BentoGrid() {
                     Nice to meet you!
                   </h3>
                   <p className="text-muted-foreground leading-relaxed">
-                    I’m a Frontend Engineer focused on building scalable and
-                    maintainable web applications using React & Next.js. I care
-                    about performance, architecture clarity, and clean debugging
-                    rather than just making things “work”.
+                    I’m Long, a Frontend Developer in Ho Chi Minh City and an
+                    FPT Polytechnic IT graduate. I started out making games on my
+                    own in 2019, then moved to the web: admin CMSs, a
+                    multi-tenant SaaS dashboard, and side projects I ship for
+                    fun. I care about understanding the business problem first,
+                    then writing code that handles the null, error and edge
+                    cases.
                   </p>
                 </div>
-                <div className="flex items-center gap-3 mt-6">
-                  <span className="px-3 py-1 text-xs rounded-full glass">
-                    UI/UX
-                  </span>
-                  <span className="px-3 py-1 text-xs rounded-full glass">
-                    ReactJS
-                  </span>
-                  <span className="px-3 py-1 text-xs rounded-full glass">
-                    NextJS
-                  </span>
-                  <span className="px-3 py-1 text-xs rounded-full glass">
-                    UI/UX
-                  </span>
+                <div className="flex flex-wrap items-center gap-2 mt-6">
+                  {["React", "Next.js", "NestJS", "Product thinking"].map((tag) => (
+                    <span key={tag} className="px-3 py-1 text-xs rounded-full glass">
+                      {tag}
+                    </span>
+                  ))}
                 </div>
               </div>
             </BentoCard>
@@ -199,13 +179,14 @@ export function BentoGrid() {
             <BentoCard>
               <div className="h-full flex flex-col">
                 <Code2 className="w-8 h-8 text-primary mb-3" />
-                <h4 className="font-semibold mb-1">Clean Code</h4>
+                <h4 className="font-semibold mb-1">Defensive Code</h4>
                 <p className="text-sm text-muted-foreground flex-1">
-                  Writing maintainable, scalable, and well-documented code
+                  Typed end-to-end, with null, error and edge cases handled up
+                  front
                 </p>
                 <div className="mt-4 font-mono text-xs text-muted-foreground">
-                  <span className="text-primary">const</span> quality ={" "}
-                  <span className="text-accent">'100%'</span>
+                  <span className="text-primary">if</span> (!data){" "}
+                  <span className="text-accent">return</span> fallback;
                 </div>
               </div>
             </BentoCard>
@@ -214,9 +195,10 @@ export function BentoGrid() {
             <BentoCard>
               <div className="h-full flex flex-col">
                 <Palette className="w-8 h-8 text-accent mb-3" />
-                <h4 className="font-semibold mb-1">UI Design</h4>
+                <h4 className="font-semibold mb-1">Product Mindset</h4>
                 <p className="text-sm text-muted-foreground flex-1">
-                  Creating beautiful interfaces with attention to detail
+                  Asking who uses it, where the data comes from and what breaks
+                  before writing code
                 </p>
                 <div className="flex gap-2 mt-4">
                   <div className="w-4 h-4 rounded-full bg-primary" />
@@ -230,26 +212,17 @@ export function BentoGrid() {
             <BentoCard className="md:col-span-2">
               <h4 className="font-semibold mb-4 flex items-center gap-2">
                 <Cpu className="w-5 h-5 text-primary" />
-                Tech Stack
+                What I Work With
               </h4>
               <div className="space-y-3">
-                {skills.map((skill) => (
-                  <div key={skill.name}>
-                    <div className="flex justify-between text-sm mb-1">
-                      <span>{skill.name}</span>
-                      <span className="text-muted-foreground">
-                        {skill.level}%
-                      </span>
-                    </div>
-                    <div className="h-2 rounded-full bg-muted overflow-hidden">
-                      <motion.div
-                        className="h-full rounded-full bg-linear-to-r from-primary to-accent"
-                        initial={{ width: 0 }}
-                        whileInView={{ width: `${skill.level}%` }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 1, ease: "easeOut" }}
-                      />
-                    </div>
+                {focusAreas.map((area) => (
+                  <div key={area.name} className="flex flex-col sm:flex-row sm:items-baseline sm:gap-3">
+                    <span className="text-sm font-medium sm:w-28 shrink-0">
+                      {area.name}
+                    </span>
+                    <span className="text-sm text-muted-foreground">
+                      {area.detail}
+                    </span>
                   </div>
                 ))}
               </div>
@@ -261,7 +234,16 @@ export function BentoGrid() {
                 <Github className="w-8 h-8 mb-3" />
                 <h4 className="font-semibold mb-1">Open Source</h4>
                 <p className="text-sm text-muted-foreground flex-1">
-                  Contributing to the community
+                  Published{" "}
+                  <a
+                    href="https://github.com/pthieenlong/second-brain-mcp"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-primary hover:underline"
+                  >
+                    second-brain-mcp
+                  </a>{" "}
+                  on npm
                 </p>
                 <div className="flex gap-1 mt-4">
                   {[...Array(7)].map((_, i) => (
@@ -285,9 +267,9 @@ export function BentoGrid() {
             <BentoCard>
               <div className="h-full flex flex-col items-center justify-center text-center">
                 <Globe className="w-12 h-12 text-primary mb-3 animate-spin-slow" />
-                <h4 className="font-semibold">Worldwide</h4>
+                <h4 className="font-semibold">Ho Chi Minh City</h4>
                 <p className="text-sm text-muted-foreground">
-                  Available remotely
+                  Vietnam · GMT+7
                 </p>
               </div>
             </BentoCard>

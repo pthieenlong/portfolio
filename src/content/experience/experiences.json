@@ -1,48 +1,57 @@
 {
   "experiences": [
     {
-      "company": "TechVision Corp",
-      "position": "Senior Frontend Engineer",
-      "startDate": "2023-03-01",
-      "current": true,
-      "description": "Lead frontend development for a SaaS platform serving 50,000+ users. Architecting scalable React applications and driving best practices across the engineering team.",
-      "highlights": [
-        "Led migration from Create React App to Next.js 14, reducing initial page load by 40%",
-        "Built a design system with 50+ reusable components used across 3 products",
-        "Mentored 3 junior developers and conducted weekly code reviews",
-        "Implemented CI/CD pipelines with GitHub Actions, reducing deployment time by 60%"
-      ],
-      "technologies": ["React", "Next.js", "TypeScript", "TailwindCSS", "GraphQL", "AWS"]
-    },
-    {
-      "company": "PixelCraft Studio",
+      "company": "Freelance & Side Projects",
       "position": "Frontend Developer",
-      "startDate": "2021-06-01",
-      "endDate": "2023-02-28",
-      "current": false,
-      "description": "Developed interactive web applications and landing pages for clients across e-commerce, fintech, and healthcare industries.",
+      "startDate": "2025-06-01",
+      "current": true,
+      "description": "Building and shipping web products end to end, from small client sites to SaaS dashboards and open-source tools.",
       "highlights": [
-        "Delivered 20+ client projects with an average satisfaction score of 4.8/5",
-        "Integrated RESTful APIs and third-party services (Stripe, Twilio, Firebase)",
-        "Improved Core Web Vitals scores from 60 to 95+ for key client sites",
-        "Collaborated closely with UI/UX designers using Figma to pixel-perfect implementations"
+        "Published second-brain-mcp to npm: a NestJS + Prisma MCP server that lets AI clients capture, tag and search Markdown notes",
+        "Built Comforty Admin, a multi-tenant admin for a furniture store chain with role-based access (Staff / Store Manager / Admin)",
+        "Designing and building a mobile-first management game in React + TypeScript with a pure, unit-tested game engine",
+        "Learning Odoo (Python) development for ERP projects"
       ],
-      "technologies": ["React", "Vue.js", "JavaScript", "SCSS", "Node.js", "PostgreSQL"]
+      "technologies": ["React", "Next.js", "NestJS", "TypeScript", "Prisma", "PostgreSQL", "Docker"]
     },
     {
-      "company": "Freelance",
-      "position": "Full-Stack Developer",
-      "startDate": "2020-01-01",
-      "endDate": "2021-05-31",
+      "company": "FPT Polytechnic",
+      "position": "IT Student — Software Development",
+      "startDate": "2021-01-01",
+      "endDate": "2025-12-31",
       "current": false,
-      "description": "Worked with startups and small businesses to build web applications, internal tools, and MVPs from concept to deployment.",
+      "description": "College degree in Information Technology, graduated with a GPA of 3.59 / 4.0.",
       "highlights": [
-        "Built and launched 8 MVPs for early-stage startups",
-        "Developed a custom CMS for a media company managing 1,000+ articles",
-        "Implemented payment integrations for 3 e-commerce platforms",
-        "Maintained long-term relationships with 5 recurring clients"
+        "Team leader of MangaReader, the graduation project: an online manga platform with reader app, admin CMS and publisher CMS",
+        "Built the admin and publisher CMSs with React 19, Vite, Zustand and Ant Design against a JWT-secured REST API with USER / ADMIN / PUBLISHER roles",
+        "Coursework projects across PHP, Angular, Next.js and NestJS"
       ],
-      "technologies": ["React", "Node.js", "Express", "MongoDB", "Docker", "Heroku"]
+      "technologies": ["React", "TypeScript", "NestJS", "Angular", "PHP", "PostgreSQL"]
+    },
+    {
+      "company": "Vietnam People's Army",
+      "position": "Military Service",
+      "startDate": "2023-01-01",
+      "endDate": "2025-01-01",
+      "current": false,
+      "description": "Completed mandatory military service.",
+      "highlights": [
+        "Two years of discipline, teamwork and working under pressure"
+      ],
+      "technologies": []
+    },
+    {
+      "company": "Self-taught",
+      "position": "Indie Game Developer",
+      "startDate": "2019-01-01",
+      "endDate": "2020-12-31",
+      "current": false,
+      "description": "Where it started: teaching myself programming by making games.",
+      "highlights": [
+        "Learned programming fundamentals by building small games on my own",
+        "Picked up C# and Java through hobby projects before moving to the web"
+      ],
+      "technologies": ["C#", "Java"]
     }
   ]
 }

@@ -1,12 +1,9 @@
 import { motion } from "framer-motion";
-import { Github, Linkedin, Twitter, Mail, Heart } from "lucide-react";
+import { Heart } from "lucide-react";
+import { withBase } from "@/lib/constants";
+import { SOCIAL_ITEMS } from "@/lib/social";
 
-const socialLinks = [
-  { href: "https://github.com/pthieenlong", icon: Github, label: "GitHub" },
-  { href: "https://linkedin.com", icon: Linkedin, label: "LinkedIn" },
-  // { href: 'https://twitter.com', icon: Twitter, label: 'Twitter' },
-  { href: "mailto:longpt.dev@gmail.com", icon: Mail, label: "Email" },
-];
+const socialLinks = SOCIAL_ITEMS;
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -18,18 +15,18 @@ export function Footer() {
           {/* Left side - Branding */}
           <div className="flex flex-col items-center md:items-start gap-2">
             <motion.a
-              href="/"
+              href={withBase("/")}
               className="flex items-center gap-2 text-lg font-bold"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
               <div className="w-6 h-6 rounded-md bg-linear-to-br from-primary to-accent flex items-center justify-center text-primary-foreground text-xs font-bold">
-                C
+                L
               </div>
               <span className="gradient-text">Pham Thien Long</span>
             </motion.a>
             <p className="text-sm text-muted-foreground">
-              Frontend Developer - Software Engineer
+              Frontend Developer · Ho Chi Minh City
             </p>
           </div>
 

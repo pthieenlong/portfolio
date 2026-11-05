@@ -1,0 +1,35 @@
+---
+title: "Tiệm Tạp Hoá Bà Ngoại (Grandma's Store)"
+description: "A mobile-first shop-management game set in a Mekong Delta village. React + TypeScript, with a pure, unit-tested game engine and data-driven content."
+tags: ["React", "TypeScript", "Vite", "TailwindCSS", "Vitest", "Game Design"]
+liveUrl: "https://grandma-store-ashy.vercel.app"
+repoUrl: "https://github.com/pthieenlong/grandma-store"
+featured: true
+publishedAt: 2026-10-18
+---
+
+## Overview
+
+A small game played in the phone browser. You inherit your late grandmother's village grocery store and serve customers one by one before the day ends, while a real-estate company tries to buy out the village before Tết. Dialogue is written in the Southern Vietnamese (miền Tây) dialect.
+
+This is a for-fun project, currently at **v0.3**.
+
+## How it plays
+
+- A day lasts about 5 minutes. Customers arrive one at a time with a patience bar.
+- Customers say what they need in dialogue; you tap items on the shelf into a tray and hand them over.
+- Wrong items cost patience; running out of stock sends them home.
+- Some customers tell a story after a successful sale and offer 3 replies.
+
+## Architecture
+
+- **`engine/`**: game rules as pure functions (`resolveSale`, `tick`, `restock`, `summarizeDay`) with no React dependency, covered by Vitest.
+- **`content/`**: days, items and random visits defined in JSON. Adding a scenario means adding a file, not code.
+- **`controllers/`**: a `GameController` owns state and the clock; React reads it through a `useStore` hook.
+- **`ui/`**: screens and components only.
+
+Every rule and balancing decision is documented in a `DECISIONS.md` that records *who* made each call, which keeps scope honest on a hobby project.
+
+## What's next
+
+Village bonds and households leaving, win/fail conditions, save game and real art assets.

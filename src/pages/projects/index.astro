@@ -1,4 +1,5 @@
 ---
+import { withBase } from '@/lib/constants';
 import { getCollection } from 'astro:content';
 import Layout from '@/layouts/Layout.astro';
 import { Header } from '@/components/layout/Header';
@@ -13,7 +14,7 @@ const allTags = [...new Set(projects.flatMap((p) => p.data.tags))];
 
 <Layout
   title="Projects — Pham Thien Long"
-  description="A full list of projects I've built — web apps, design systems, open-source libraries, and more."
+  description="Everything I've built: open-source tools, SaaS dashboards, CMSs and side projects."
 >
   <Header client:load />
 
@@ -32,7 +33,7 @@ const allTags = [...new Set(projects.flatMap((p) => p.data.tags))];
       <!-- Tag filters -->
       <div class="flex flex-wrap gap-2 mb-10">
         <a
-          href="/projects"
+          href={withBase("/projects")}
           class="px-4 py-2 rounded-lg text-sm font-medium bg-primary text-primary-foreground"
         >
           All
@@ -48,7 +49,7 @@ const allTags = [...new Set(projects.flatMap((p) => p.data.tags))];
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {projects.map((project) => (
           <a
-            href={`/projects/${project.slug}`}
+            href={withBase(`/projects/${project.slug}`)}
             class="group rounded-2xl glass overflow-hidden hover:-translate-y-2 transition-transform duration-300"
           >
             <!-- Thumbnail placeholder -->
