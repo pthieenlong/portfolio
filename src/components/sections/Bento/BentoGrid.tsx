@@ -1,126 +1,74 @@
 import { motion } from "framer-motion";
 import {
+  Check,
   Code2,
-  Palette,
+  Copy,
   Cpu,
+  ExternalLink,
+  Gamepad2,
+  Lightbulb,
   MessageSquare,
-  Globe,
-  Github,
+  Package,
 } from "lucide-react";
 import { fadeInUp, staggerContainer, staggerItem } from "@/lib/animations";
 import { cn } from "@/lib/utils";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 
 interface BentoCardProps {
   className?: string;
   children: React.ReactNode;
-  delay?: number;
 }
 
-function BentoCard({ className, children, delay = 0 }: BentoCardProps) {
-  return (
-    <motion.div
-      variants={staggerItem}
-      className={cn(
-        "bento-card rounded-2xl glass p-6 transition-all duration-300",
-        className,
-      )}
-      whileHover={{ y: -4 }}
-      transition={{ delay }}
-    >
-      {children}
-    </motion.div>
-  );
-}
+const INSTALL_COMMAND = "npx -y @pthieenlong/second-brain-mcp";
 
-const focusAreas = [
+const INTRO_TAGS = ["React", "Next.js", "NestJS", "Product thinking"];
+
+const PRODUCT_QUESTIONS = ["Who uses it?", "Where's the data?", "What breaks?"];
+
+const FOCUS_AREAS = [
   { name: "Frontend", detail: "React, Next.js (App Router), TailwindCSS, Zustand" },
   { name: "Backend", detail: "NestJS, Prisma, PostgreSQL, Redis" },
   { name: "Tooling", detail: "Docker, GitHub Actions, Vite, MCP" },
   { name: "Learning now", detail: "Odoo (Python), SQL indexing, product thinking" },
 ];
 
-const techStack = [
-  {
-    name: "React",
-    icon: (
-      <svg viewBox="0 0 24 24" className="w-8 h-8" fill="currentColor">
-        <path d="M12 10.11c1.03 0 1.87.84 1.87 1.89 0 1-.84 1.85-1.87 1.85S10.13 13 10.13 12c0-1.05.84-1.89 1.87-1.89M7.37 20c.63.38 2.01-.2 3.6-1.7-.52-.59-1.03-1.23-1.51-1.9a22.7 22.7 0 0 1-2.4-.36c-.51 2.14-.32 3.61.31 3.96m.71-5.74-.29-.51c-.11.29-.22.58-.29.86.27.06.57.11.88.16l-.3-.51m6.54-.76.81-1.5-.81-1.5c-.3-.53-.62-1-.91-1.47C13.17 9 12.6 9 12 9s-1.17 0-1.71.03c-.29.47-.61.94-.91 1.47L8.57 12l.81 1.5c.3.53.62 1 .91 1.47.54.03 1.11.03 1.71.03s1.17 0 1.71-.03c.29-.47.61-.94.91-1.47M12 6.78c-.19.22-.39.45-.59.72h1.18c-.2-.27-.4-.5-.59-.72m0 10.44c.19-.22.39-.45.59-.72h-1.18c.2.27.4.5.59.72M16.62 4c-.62-.38-2 .2-3.59 1.7.52.59 1.03 1.23 1.51 1.9.82.08 1.63.2 2.4.36.51-2.14.32-3.61-.32-3.96m-.7 5.74.29.51c.11-.29.22-.58.29-.86-.27-.06-.57-.11-.88-.16l.3.51m1.45-7.05c1.47.84 1.63 3.05 1.01 5.63 2.54.75 4.37 1.99 4.37 3.68s-1.83 2.93-4.37 3.68c.62 2.58.46 4.79-1.01 5.63-1.46.84-3.45-.12-5.37-1.95-1.92 1.83-3.91 2.79-5.38 1.95-1.46-.84-1.62-3.05-1-5.63-2.54-.75-4.37-1.99-4.37-3.68s1.83-2.93 4.37-3.68c-.62-2.58-.46-4.79 1-5.63 1.47-.84 3.46.12 5.38 1.95 1.92-1.83 3.91-2.79 5.37-1.95M17.08 12c.34.75.64 1.5.89 2.26 2.1-.63 3.28-1.53 3.28-2.26s-1.18-1.63-3.28-2.26c-.25.76-.55 1.51-.89 2.26M6.92 12c-.34-.75-.64-1.5-.89-2.26-2.1.63-3.28 1.53-3.28 2.26s1.18 1.63 3.28 2.26c.25-.76.55-1.51.89-2.26m9 2.26-.3.51c.31-.05.61-.1.88-.16-.07-.28-.18-.57-.29-.86l-.29.51m-2.89 4.04c1.59 1.5 2.97 2.08 3.59 1.7.64-.35.83-1.82.32-3.96-.77.16-1.58.28-2.4.36-.48.67-.99 1.31-1.51 1.9M8.08 9.74l.3-.51c-.31.05-.61.1-.88.16.07.28.18.57.29.86l.29-.51m2.89-4.04C9.38 4.2 8 3.62 7.37 4c-.63.35-.82 1.82-.31 3.96a22.7 22.7 0 0 1 2.4-.36c.48-.67.99-1.31 1.51-1.9" />
-      </svg>
-    ),
-  },
-  {
-    name: "Next.js",
-    icon: (
-      <svg viewBox="0 0 24 24" className="w-8 h-8" fill="currentColor">
-        <path d="M11.572 0c-.176 0-.31.001-.358.007a19.76 19.76 0 0 1-.364.033C7.443.346 4.25 2.185 2.228 5.012a11.875 11.875 0 0 0-2.119 5.243c-.096.659-.108.854-.108 1.747s.012 1.089.108 1.748c.652 4.506 3.86 8.292 8.209 9.695.779.25 1.6.422 2.534.525.363.04 1.935.04 2.299 0 1.611-.178 2.977-.577 4.323-1.264.207-.106.247-.134.219-.158-.02-.013-.9-1.193-1.955-2.62l-1.919-2.592-2.404-3.558a338.739 338.739 0 0 0-2.422-3.556c-.009-.002-.018 1.579-.023 3.51-.007 3.38-.01 3.515-.052 3.595a.426.426 0 0 1-.206.214c-.075.037-.14.044-.495.044H7.81l-.108-.068a.438.438 0 0 1-.157-.171l-.05-.106.006-4.703.007-4.705.072-.092a.645.645 0 0 1 .174-.143c.096-.047.134-.051.54-.051.478 0 .558.018.682.154.035.038 1.337 1.999 2.895 4.361a10760.433 10760.433 0 0 0 4.735 7.17l1.9 2.879.096-.063a12.317 12.317 0 0 0 2.466-2.163 11.944 11.944 0 0 0 2.824-6.134c.096-.66.108-.854.108-1.748 0-.893-.012-1.088-.108-1.747-.652-4.506-3.86-8.292-8.208-9.695a12.597 12.597 0 0 0-2.499-.523A33.119 33.119 0 0 0 11.572 0zm4.069 7.217c.347 0 .408.005.486.047a.473.473 0 0 1 .237.277c.018.06.023 1.365.018 4.304l-.006 4.218-.744-1.14-.746-1.14v-3.066c0-1.982.01-3.097.023-3.15a.478.478 0 0 1 .233-.296c.096-.05.13-.054.5-.054z" />
-      </svg>
-    ),
-  },
-  {
-    name: "NestJS",
-    icon: (
-      <svg viewBox="0 0 24 24" className="w-8 h-8" fill="currentColor">
-        <path d="M14.131.047c-.173 0-.334.037-.483.087.316.21.49.49.576.806.007.043.019.074.025.117.007.043.006.117.012.16.012.2-.055.37-.093.555-.043.186-.13.37-.217.555-.05.117-.13.222-.18.34-.062.135-.13.26-.18.395a.985.985 0 0 0-.05.34c.006.092.037.18.074.266.025.068.08.13.13.192.074.08.161.148.254.21.105.068.217.124.347.161.068.018.142.037.217.055.043.006.086.018.13.024.037.006.073.006.11.006.173-.012.334-.08.483-.148.068-.037.142-.074.204-.117.068-.043.142-.093.204-.148.056-.049.105-.099.155-.148.049-.05.086-.105.117-.16.031-.056.062-.112.08-.168.025-.074.037-.148.037-.223 0-.074-.012-.149-.037-.223a.808.808 0 0 0-.08-.168c-.031-.055-.068-.11-.117-.16a1.168 1.168 0 0 0-.155-.148 1.53 1.53 0 0 0-.204-.148 1.498 1.498 0 0 0-.204-.117 1.604 1.604 0 0 0-.483-.148C14.341.041 14.236.047 14.131.047zM16.24.955c-.086.012-.167.037-.242.068-.074.03-.142.074-.204.117-.062.043-.117.093-.167.148-.05.056-.093.111-.13.173-.037.062-.062.13-.08.198a.723.723 0 0 0-.025.21c0 .074.006.148.025.217.018.068.043.13.08.192.037.062.08.117.13.167.05.05.105.1.167.142.062.043.13.08.204.111.074.031.155.056.242.068a.96.96 0 0 0 .254 0c.086-.012.167-.037.241-.068.074-.03.143-.068.204-.111.062-.043.118-.093.168-.142.05-.05.092-.105.13-.167.037-.062.062-.124.08-.192a.723.723 0 0 0 .024-.217.73.73 0 0 0-.025-.21.661.661 0 0 0-.08-.198 1.006 1.006 0 0 0-.13-.173 1.18 1.18 0 0 0-.167-.148 1.218 1.218 0 0 0-.204-.117 1.165 1.165 0 0 0-.242-.068.96.96 0 0 0-.254 0zm3.297 1.75c-.05.006-.093.018-.136.037-.043.018-.08.043-.111.074-.031.031-.056.068-.074.111-.018.043-.03.093-.03.148 0 .037.006.074.018.11a.39.39 0 0 0 .049.1.337.337 0 0 0 .08.08c.03.024.068.043.111.055.043.013.093.019.142.019h.006c.068 0 .13-.019.186-.05.055-.03.099-.074.13-.13.03-.055.049-.117.049-.185 0-.037-.006-.074-.019-.111a.363.363 0 0 0-.049-.099.332.332 0 0 0-.08-.08.306.306 0 0 0-.11-.056.408.408 0 0 0-.136-.024h-.025zm-9.307.092c-.068.006-.13.025-.186.055a.508.508 0 0 0-.148.124.52.52 0 0 0-.093.173.652.652 0 0 0-.03.198c0 .068.012.13.036.186.025.056.056.105.099.148a.473.473 0 0 0 .148.105c.056.025.117.037.18.037h.024c.062-.006.118-.025.167-.056a.42.42 0 0 0 .13-.117.482.482 0 0 0 .08-.167.553.553 0 0 0 .024-.186c0-.068-.012-.136-.037-.198a.516.516 0 0 0-.105-.173.526.526 0 0 0-.155-.118.435.435 0 0 0-.135-.011zm-4.53.006c-.086.012-.167.043-.241.086a.957.957 0 0 0-.204.155c-.062.062-.117.13-.161.204a1.009 1.009 0 0 0-.105.241 1.007 1.007 0 0 0-.037.254c0 .087.012.173.037.254.025.08.056.161.105.235.044.074.1.142.161.204.062.062.13.111.204.155.074.043.155.074.241.093.087.018.174.025.26.018.087-.006.174-.024.254-.056a.894.894 0 0 0 .229-.13.938.938 0 0 0 .186-.185.887.887 0 0 0 .13-.229.923.923 0 0 0 .062-.26.893.893 0 0 0-.012-.266.894.894 0 0 0-.08-.254 1.02 1.02 0 0 0-.149-.222 1.026 1.026 0 0 0-.198-.18 1.022 1.022 0 0 0-.235-.13 1.003 1.003 0 0 0-.261-.068.938.938 0 0 0-.138-.005l-.049.006c-.037.006-.074.006-.111.012-.043.006-.08.019-.118.037zM12 3.96c-.53 0-1.044.056-1.542.161a8.074 8.074 0 0 0-4.834 3.085A8.072 8.072 0 0 0 4.25 12c0 1.47.395 2.852 1.079 4.042a8.077 8.077 0 0 0 3.923 3.39l.068.025.019.006c.475.192.975.334 1.49.422.037.006.068.012.105.018.068.012.136.019.204.03.074.013.148.02.222.032.08.006.16.012.24.018.056.006.112.006.168.012.13.006.26.006.389.006h.148c.13 0 .26-.006.389-.012.056-.006.111-.006.167-.012.08-.006.16-.012.241-.024.074-.012.148-.018.222-.03.068-.013.136-.019.204-.031.037-.006.068-.012.105-.019a8.132 8.132 0 0 0 1.49-.42l.018-.007.068-.025a8.074 8.074 0 0 0 3.923-3.39A8.04 8.04 0 0 0 19.75 12c0-1.752-.562-3.37-1.515-4.687a8.074 8.074 0 0 0-4.693-3.178l-.042-.006A8.11 8.11 0 0 0 12 3.96z" />
-      </svg>
-    ),
-  },
-  {
-    name: "Docker",
-    icon: (
-      <svg viewBox="0 0 24 24" className="w-8 h-8" fill="currentColor">
-        <path d="M13.983 11.078h2.119a.186.186 0 0 0 .186-.185V9.006a.186.186 0 0 0-.186-.186h-2.119a.185.185 0 0 0-.185.185v1.888c0 .102.083.185.185.185m-2.954-5.43h2.118a.186.186 0 0 0 .186-.186V3.574a.186.186 0 0 0-.186-.185h-2.118a.185.185 0 0 0-.185.185v1.888c0 .102.082.185.185.186m0 2.716h2.118a.187.187 0 0 0 .186-.186V6.29a.186.186 0 0 0-.186-.185h-2.118a.185.185 0 0 0-.185.185v1.887c0 .102.082.185.185.186m-2.93 0h2.12a.186.186 0 0 0 .184-.186V6.29a.185.185 0 0 0-.185-.185H8.1a.185.185 0 0 0-.185.185v1.887c0 .102.083.185.185.186m-2.964 0h2.119a.186.186 0 0 0 .185-.186V6.29a.185.185 0 0 0-.185-.185H5.136a.186.186 0 0 0-.186.185v1.887c0 .102.084.185.186.186m5.893 2.715h2.118a.186.186 0 0 0 .186-.185V9.006a.186.186 0 0 0-.186-.186h-2.118a.185.185 0 0 0-.185.185v1.888c0 .102.082.185.185.185m-2.93 0h2.12a.185.185 0 0 0 .184-.185V9.006a.185.185 0 0 0-.184-.186h-2.12a.185.185 0 0 0-.184.185v1.888c0 .102.083.185.185.185m-2.964 0h2.119a.185.185 0 0 0 .185-.185V9.006a.185.185 0 0 0-.185-.186H5.136a.186.186 0 0 0-.186.185v1.888c0 .102.084.185.186.185m-2.92 0h2.12a.185.185 0 0 0 .184-.185V9.006a.185.185 0 0 0-.184-.186h-2.12a.185.185 0 0 0-.184.185v1.888c0 .102.082.185.185.185M23.763 9.89c-.065-.051-.672-.51-1.954-.51-.338.001-.676.03-1.01.087-.248-1.7-1.653-2.53-1.716-2.566l-.344-.199-.226.327c-.284.438-.49.922-.612 1.43-.23.97-.09 1.882.403 2.661-.595.332-1.55.413-1.744.42H.751a.751.751 0 0 0-.75.748 11.376 11.376 0 0 0 .692 4.062c.545 1.428 1.355 2.48 2.41 3.124 1.18.723 3.1 1.137 5.275 1.137.983.003 1.963-.086 2.93-.266a12.248 12.248 0 0 0 3.823-1.389c.98-.567 1.86-1.288 2.61-2.136 1.252-1.418 1.998-2.997 2.553-4.4h.221c1.372 0 2.215-.549 2.68-1.009.309-.293.55-.65.707-1.046l.098-.288Z" />
-      </svg>
-    ),
-  },
-  {
-    name: "PostgreSQL",
-    icon: (
-      <svg viewBox="0 0 24 24" className="w-8 h-8" fill="currentColor">
-        <path d="M17.128 0a10.134 10.134 0 0 0-2.755.403l-.063.02A10.922 10.922 0 0 0 12.6.258C11.422.238 10.41.524 9.594 1 8.79.721 7.122.24 5.364.336 4.14.403 2.804.775 1.814 1.82.824 2.865.305 4.482.415 6.682c.03.607.203 1.597.49 2.879s.69 2.783 1.193 4.152c.503 1.37 1.054 2.6 1.915 3.436.43.419 1.022.771 1.72.742.49-.02.933-.235 1.315-.552.186.245.385.352.566.451.228.125.45.21.68.266.413.103 1.12.241 1.948.1.282-.047.579-.139.875-.27.011.33.024.653.037.98.041 1.036.067 1.993.378 2.832.05.137.187.843.727 1.466.54.624 1.598 1.013 2.803.755.85-.182 1.931-.51 2.649-1.532.71-1.01 1.03-2.459 1.093-4.809.016-.127.035-.235.055-.336l.169.015h.02c.907.041 1.891-.088 2.713-.47.728-.337 1.279-.678 1.68-1.283.1-.15.19-.543.126-.996-.064-.454-.36-.985-.768-1.33-.728-.616-1.42-.886-2.024-1.053.066-.222.109-.463.12-.728.012-.345-.024-.737-.168-1.09-.144-.354-.39-.652-.655-.926-.552-.57-.937-.932-1.132-1.78-.149-.65-.248-1.43-.33-2.28-.082-.85-.14-1.773-.465-2.695-.325-.921-.907-1.843-1.948-2.415A5.036 5.036 0 0 0 17.128 0" />
-      </svg>
-    ),
-  },
-  {
-    name: "TypeScript",
-    icon: (
-      <svg viewBox="0 0 24 24" className="w-8 h-8" fill="currentColor">
-        <path d="M1.125 0C.502 0 0 .502 0 1.125v21.75C0 23.498.502 24 1.125 24h21.75c.623 0 1.125-.502 1.125-1.125V1.125C24 .502 23.498 0 22.875 0zm17.363 9.75c.612 0 1.154.037 1.627.111a6.38 6.38 0 0 1 1.306.34v2.458a3.95 3.95 0 0 0-.643-.361 5.093 5.093 0 0 0-.717-.26 5.453 5.453 0 0 0-1.426-.2c-.3 0-.573.028-.819.086a2.1 2.1 0 0 0-.623.242c-.17.104-.3.229-.393.374a.888.888 0 0 0-.14.49c0 .196.053.373.156.529.104.156.252.304.443.444s.423.276.696.41c.273.135.582.274.926.416.47.197.892.407 1.266.628.374.222.695.473.963.753.268.279.472.598.614.957.142.359.214.776.214 1.253 0 .657-.125 1.21-.373 1.656a3.033 3.033 0 0 1-1.012 1.085 4.38 4.38 0 0 1-1.487.596c-.566.12-1.163.18-1.79.18a9.916 9.916 0 0 1-1.84-.164 5.544 5.544 0 0 1-1.512-.493v-2.63a5.033 5.033 0 0 0 3.237 1.2c.333 0 .624-.03.872-.09.249-.06.456-.144.623-.25.166-.108.29-.234.373-.38a1.023 1.023 0 0 0-.074-1.089 2.12 2.12 0 0 0-.537-.5 5.597 5.597 0 0 0-.807-.444 27.72 27.72 0 0 0-1.007-.436c-.918-.383-1.602-.852-2.053-1.405-.45-.553-.676-1.222-.676-2.005 0-.614.123-1.141.369-1.582.246-.441.58-.804 1.004-1.089a4.494 4.494 0 0 1 1.47-.629 7.536 7.536 0 0 1 1.77-.201zm-15.113.188h9.563v2.166H9.506v9.646H6.789v-9.646H3.375z" />
-      </svg>
-    ),
-  },
-  {
-    name: "Node.js",
-    icon: (
-      <svg viewBox="0 0 24 24" className="w-8 h-8" fill="currentColor">
-        <path d="M11.998 24c-.321 0-.641-.084-.922-.247l-2.936-1.737c-.438-.245-.224-.332-.08-.383.585-.203.703-.25 1.328-.604.065-.037.151-.023.218.017l2.256 1.339a.29.29 0 0 0 .272 0l8.795-5.076a.277.277 0 0 0 .134-.238V6.921a.28.28 0 0 0-.137-.242l-8.791-5.072a.278.278 0 0 0-.271 0L3.075 6.68a.284.284 0 0 0-.139.241v10.15a.27.27 0 0 0 .138.236l2.409 1.392c1.307.654 2.108-.116 2.108-.89V7.787c0-.142.114-.253.256-.253h1.115c.139 0 .255.112.255.253v10.021c0 1.745-.95 2.745-2.604 2.745-.508 0-.909 0-2.026-.551L2.28 18.675a1.856 1.856 0 0 1-.922-1.604V6.921c0-.659.353-1.275.922-1.603L11.075.242a1.932 1.932 0 0 1 1.848 0l8.794 5.076c.57.329.924.944.924 1.603v10.15a1.86 1.86 0 0 1-.924 1.604l-8.794 5.078a1.836 1.836 0 0 1-.925.247" />
-      </svg>
-    ),
-  },
-  {
-    name: "TailwindCSS",
-    icon: (
-      <svg viewBox="0 0 24 24" className="w-8 h-8" fill="currentColor">
-        <path d="M12.001 4.8c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.913.228 1.565.89 2.288 1.624C13.666 10.618 15.027 12 18.001 12c3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.913-.228-1.565-.89-2.288-1.624C16.337 6.182 14.976 4.8 12.001 4.8zm-6 7.2c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.913.228 1.565.89 2.288 1.624 1.177 1.194 2.538 2.576 5.512 2.576 3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.913-.228-1.565-.89-2.288-1.624C10.337 13.382 8.976 12 6.001 12z" />
-      </svg>
-    ),
-  },
-  {
-    name: "Redis",
-    icon: (
-      <svg viewBox="0 0 24 24" className="w-8 h-8" fill="currentColor">
-        <path d="M10.5 2.661l.54.997-1.797.644 2.409.218.748 1.246.467-1.122 2.077-.208-1.61-.613.426-1.104-1.397.665zm6.538 3.12v2.027l2.606 1.044-2.606 1.058V11.9l-2.974-1.404v2.063L12 13.574l-2.063-1.014v-2.063L6.963 11.9V9.873L4.419 8.852l2.544-1.033V5.781l2.974 1.404V5.061L12 4.003l2.063 1.058v2.124zm-3.507 6.406l2.07 1.015v2.062l2.972-1.403v2.092l-5.042 2.46-5.042-2.46V13.86l2.972 1.404v-2.063z" />
-      </svg>
-    ),
-  },
-  {
-    name: "Git",
-    icon: (
-      <svg viewBox="0 0 24 24" className="w-8 h-8" fill="currentColor">
-        <path d="M23.546 10.93L13.067.452a1.55 1.55 0 0 0-2.188 0L8.708 2.627l2.76 2.76a1.838 1.838 0 0 1 2.327 2.341l2.66 2.66a1.838 1.838 0 1 1-1.103 1.03l-2.48-2.48v6.53a1.838 1.838 0 1 1-1.512-.065V8.78a1.838 1.838 0 0 1-.998-2.41L7.629 3.64.452 10.818a1.55 1.55 0 0 0 0 2.187l10.48 10.48a1.55 1.55 0 0 0 2.186 0l10.428-10.43a1.55 1.55 0 0 0 0-2.125z" />
-      </svg>
-    ),
-  },
-];
+function BentoCard({ className, children }: BentoCardProps) {
+  return (
+    <motion.div
+      variants={staggerItem}
+      className={cn("bento-card rounded-2xl glass p-6", className)}
+      whileHover={{ y: -4 }}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+function InstallSnippet() {
+  const { copied, failed, copy } = useCopyToClipboard();
+
+  return (
+    <div className="mt-4 flex items-center gap-2 rounded-xl bg-muted px-3 py-2 font-mono text-xs">
+      <span className="text-primary select-none" aria-hidden="true">$</span>
+      <code className="flex-1 truncate">{INSTALL_COMMAND}</code>
+      <button
+        type="button"
+        onClick={() => copy(INSTALL_COMMAND)}
+        className="shrink-0 p-1.5 rounded-md hover:bg-glass-hover transition-colors"
+        aria-label={copied ? "Copied" : "Copy install command"}
+      >
+        {copied ? (
+          <Check className="w-3.5 h-3.5 text-primary" />
+        ) : (
+          <Copy className="w-3.5 h-3.5" />
+        )}
+      </button>
+      <span className="sr-only" aria-live="polite">
+        {copied ? "Copied to clipboard" : failed ? "Copy failed, select the text manually" : ""}
+      </span>
+    </div>
+  );
+}
 
 export function BentoGrid() {
   return (
@@ -134,171 +82,133 @@ export function BentoGrid() {
         >
           {/* Section header */}
           <motion.div variants={fadeInUp} className="text-center mb-16">
-            <h2 className="section-title">
-              About <span className="gradient-text">Me</span>
-            </h2>
+            <h2 className="section-title">About Me</h2>
             <p className="section-subtitle max-w-2xl mx-auto">
               A frontend developer with a soft spot for product and business
               problems
             </p>
           </motion.div>
 
-          {/* Bento Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 auto-rows-[minmax(180px,auto)]">
-            {/* Main intro card - spans 2 cols */}
-            <BentoCard className="md:col-span-2 lg:row-span-2">
-              <div className="h-full flex flex-col justify-between">
-                <div>
-                  <div className="w-12 h-12 rounded-xl bg-linear-to-br from-primary to-accent flex items-center justify-center mb-4">
-                    <MessageSquare className="w-6 h-6 text-primary-foreground" />
-                  </div>
-                  <h3 className="text-xl font-semibold mb-2">
-                    Nice to meet you!
-                  </h3>
-                  <p className="text-muted-foreground leading-relaxed">
-                    I’m Long, a Frontend Developer in Ho Chi Minh City and an
-                    FPT Polytechnic IT graduate. I started out making games on my
-                    own in 2019, then moved to the web: admin CMSs, a
-                    multi-tenant SaaS dashboard, and side projects I ship for
-                    fun. I care about understanding the business problem first,
-                    then writing code that handles the null, error and edge
-                    cases.
-                  </p>
-                </div>
-                <div className="flex flex-wrap items-center gap-2 mt-6">
-                  {["React", "Next.js", "NestJS", "Product thinking"].map((tag) => (
-                    <span key={tag} className="px-3 py-1 text-xs rounded-full glass">
-                      {tag}
-                    </span>
-                  ))}
-                </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            {/* Intro */}
+            <BentoCard className="md:col-span-2 lg:row-span-2 flex flex-col">
+              <div className="w-12 h-12 rounded-xl bg-primary/15 text-primary flex items-center justify-center mb-4">
+                <MessageSquare className="w-6 h-6" />
+              </div>
+              <h3 className="text-xl font-semibold mb-3">Nice to meet you!</h3>
+              <p className="text-muted-foreground leading-relaxed">
+                I’m Long, a Frontend Developer in Ho Chi Minh City and an FPT
+                Polytechnic IT graduate. I started out making games on my own in
+                2019, then moved to the web: admin CMSs, a multi-tenant SaaS
+                dashboard, and side projects I ship for fun.
+              </p>
+              <p className="text-muted-foreground leading-relaxed mt-3">
+                I care about understanding the business problem first, then
+                writing code that handles the null, error and edge cases.
+              </p>
+              <div className="flex flex-wrap items-center gap-2 mt-auto pt-6">
+                {INTRO_TAGS.map((tag) => (
+                  <span key={tag} className="px-3 py-1 text-xs rounded-full glass">
+                    {tag}
+                  </span>
+                ))}
               </div>
             </BentoCard>
 
-            {/* Code card */}
-            <BentoCard>
-              <div className="h-full flex flex-col">
-                <Code2 className="w-8 h-8 text-primary mb-3" />
-                <h4 className="font-semibold mb-1">Defensive Code</h4>
-                <p className="text-sm text-muted-foreground flex-1">
-                  Typed end-to-end, with null, error and edge cases handled up
-                  front
-                </p>
-                <div className="mt-4 font-mono text-xs text-muted-foreground">
-                  <span className="text-primary">if</span> (!data){" "}
-                  <span className="text-accent">return</span> fallback;
-                </div>
-              </div>
+            {/* Defensive code */}
+            <BentoCard className="flex flex-col">
+              <Code2 className="w-8 h-8 text-primary mb-3" />
+              <h4 className="font-semibold mb-1">Defensive Code</h4>
+              <p className="text-sm text-muted-foreground flex-1">
+                Typed end-to-end, with null, error and edge cases handled up
+                front
+              </p>
+              <code className="mt-4 font-mono text-xs text-muted-foreground">
+                <span className="text-accent">if</span> (!data){" "}
+                <span className="text-accent">return</span> fallback;
+              </code>
             </BentoCard>
 
-            {/* Design card */}
-            <BentoCard>
-              <div className="h-full flex flex-col">
-                <Palette className="w-8 h-8 text-accent mb-3" />
-                <h4 className="font-semibold mb-1">Product Mindset</h4>
-                <p className="text-sm text-muted-foreground flex-1">
-                  Asking who uses it, where the data comes from and what breaks
-                  before writing code
-                </p>
-                <div className="flex gap-2 mt-4">
-                  <div className="w-4 h-4 rounded-full bg-primary" />
-                  <div className="w-4 h-4 rounded-full bg-accent" />
-                  <div className="w-4 h-4 rounded-full bg-muted" />
-                </div>
-              </div>
+            {/* Product mindset */}
+            <BentoCard className="flex flex-col">
+              <Lightbulb className="w-8 h-8 text-accent mb-3" />
+              <h4 className="font-semibold mb-1">Product Mindset</h4>
+              <p className="text-sm text-muted-foreground flex-1">
+                The questions I ask before writing code
+              </p>
+              <ul className="flex flex-wrap gap-1.5 mt-4">
+                {PRODUCT_QUESTIONS.map((q) => (
+                  <li
+                    key={q}
+                    className="px-2 py-0.5 text-xs rounded-md bg-muted text-muted-foreground"
+                  >
+                    {q}
+                  </li>
+                ))}
+              </ul>
             </BentoCard>
 
-            {/* Skills progress card - spans 2 cols */}
+            {/* What I work with */}
             <BentoCard className="md:col-span-2">
               <h4 className="font-semibold mb-4 flex items-center gap-2">
                 <Cpu className="w-5 h-5 text-primary" />
                 What I Work With
               </h4>
-              <div className="space-y-3">
-                {focusAreas.map((area) => (
-                  <div key={area.name} className="flex flex-col sm:flex-row sm:items-baseline sm:gap-3">
-                    <span className="text-sm font-medium sm:w-28 shrink-0">
+              <dl className="space-y-3">
+                {FOCUS_AREAS.map((area) => (
+                  <div
+                    key={area.name}
+                    className="flex flex-col sm:flex-row sm:items-baseline sm:gap-3"
+                  >
+                    <dt className="text-sm font-medium sm:w-28 shrink-0">
                       {area.name}
-                    </span>
-                    <span className="text-sm text-muted-foreground">
-                      {area.detail}
-                    </span>
+                    </dt>
+                    <dd className="text-sm text-muted-foreground">{area.detail}</dd>
                   </div>
                 ))}
-              </div>
+              </dl>
             </BentoCard>
 
-            {/* GitHub activity card */}
-            <BentoCard>
-              <div className="h-full flex flex-col">
-                <Github className="w-8 h-8 mb-3" />
-                <h4 className="font-semibold mb-1">Open Source</h4>
-                <p className="text-sm text-muted-foreground flex-1">
-                  Published{" "}
-                  <a
-                    href="https://github.com/pthieenlong/second-brain-mcp"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-primary hover:underline"
-                  >
-                    second-brain-mcp
-                  </a>{" "}
-                  on npm
-                </p>
-                <div className="flex gap-1 mt-4">
-                  {[...Array(7)].map((_, i) => (
-                    <div
-                      key={i}
-                      className={cn(
-                        "w-3 h-3 rounded-sm",
-                        i % 3 === 0
-                          ? "bg-primary"
-                          : i % 2 === 0
-                            ? "bg-primary/50"
-                            : "bg-muted",
-                      )}
-                    />
-                  ))}
-                </div>
-              </div>
-            </BentoCard>
-
-            {/* Globe card */}
-            <BentoCard>
-              <div className="h-full flex flex-col items-center justify-center text-center">
-                <Globe className="w-12 h-12 text-primary mb-3 animate-spin-slow" />
-                <h4 className="font-semibold">Ho Chi Minh City</h4>
-                <p className="text-sm text-muted-foreground">
-                  Vietnam · GMT+7
-                </p>
-              </div>
-            </BentoCard>
-
-            {/* Tech stack marquee card - spans 2 cols */}
-            <BentoCard className="md:col-span-2 overflow-hidden">
-              <h4 className="font-semibold mb-4 flex items-center gap-2">
-                <Cpu className="w-5 h-5 text-primary" />
-                Tech Stack
+            {/* Open source: real package, real command */}
+            <BentoCard className="md:col-span-2 flex flex-col">
+              <h4 className="font-semibold mb-1 flex items-center gap-2">
+                <Package className="w-5 h-5 text-primary" />
+                Open Source on npm
               </h4>
-              <div className="relative">
-                {/* Fade edges */}
-                <div className="absolute left-0 top-0 bottom-0 w-12 bg-linear-to-r from-glass to-transparent z-10 pointer-events-none" />
-                <div className="absolute right-0 top-0 bottom-0 w-12 bg-linear-to-l from-glass to-transparent z-10 pointer-events-none" />
-                {/* Scrolling content */}
-                <div className="flex animate-marquee w-max gap-8">
-                  {[...techStack, ...techStack].map((tech, i) => (
-                    <div
-                      key={`${tech.name}-${i}`}
-                      className="flex flex-col items-center gap-2 text-muted-foreground hover:text-primary transition-colors duration-300"
-                    >
-                      {tech.icon}
-                      <span className="text-xs whitespace-nowrap">
-                        {tech.name}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </div>
+              <p className="text-sm text-muted-foreground">
+                <a
+                  href="https://github.com/pthieenlong/second-brain-mcp"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-foreground font-medium hover:text-primary transition-colors"
+                >
+                  second-brain-mcp
+                </a>{" "}
+                lets AI assistants save and search your notes as Markdown files.
+                One line to run it:
+              </p>
+              <InstallSnippet />
+            </BentoCard>
+
+            {/* Side quest: the game */}
+            <BentoCard className="md:col-span-2 flex flex-col">
+              <h4 className="font-semibold mb-1 flex items-center gap-2">
+                <Gamepad2 className="w-5 h-5 text-accent" />
+                Side Quest
+              </h4>
+              <p className="text-sm text-muted-foreground flex-1">
+                Still making games for fun: a village grocery store game in the
+                Mekong Delta, written in React with a unit-tested engine.
+              </p>
+              <a
+                href="https://grandma-store-ashy.vercel.app"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-4 inline-flex items-center gap-1.5 self-start text-sm font-medium text-primary hover:underline"
+              >
+                Play it in your phone browser
+                <ExternalLink className="w-3.5 h-3.5" />
+              </a>
             </BentoCard>
           </div>
         </motion.div>

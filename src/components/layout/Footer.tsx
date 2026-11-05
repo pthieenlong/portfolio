@@ -23,7 +23,7 @@ export function Footer() {
               <div className="w-6 h-6 rounded-md bg-linear-to-br from-primary to-accent flex items-center justify-center text-primary-foreground text-xs font-bold">
                 L
               </div>
-              <span className="gradient-text">Pham Thien Long</span>
+              <span>Pham Thien Long</span>
             </motion.a>
             <p className="text-sm text-muted-foreground">
               Frontend Developer · Ho Chi Minh City

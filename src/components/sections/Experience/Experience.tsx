@@ -114,7 +114,7 @@ export function Experience({ experiences }: Props) {
           {/* Section header */}
           <motion.div variants={fadeInUp} className="text-center mb-16">
             <h2 className="section-title">
-              My <span className="gradient-text">Journey</span>
+              My Journey
             </h2>
             <p className="section-subtitle max-w-2xl mx-auto">
               From self-taught game dev to frontend developer

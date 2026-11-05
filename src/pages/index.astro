@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import Layout from '@/layouts/Layout.astro';
+import { getProjects } from '@/lib/projects';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { Hero } from '@/components/sections/Hero';
@@ -9,19 +10,7 @@ import { Projects } from '@/components/sections/Projects';
 import { Experience } from '@/components/sections/Experience';
 import { Contact } from '@/components/sections/Contact';
 
-const projectEntries = await getCollection('projects');
-const projects = projectEntries
-  .sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf())
-  .map((entry) => ({
-    slug: entry.slug,
-    title: entry.data.title,
-    description: entry.data.description,
-    thumbnail: entry.data.thumbnail,
-    tags: entry.data.tags,
-    liveUrl: entry.data.liveUrl,
-    repoUrl: entry.data.repoUrl,
-    featured: entry.data.featured,
-  }));
+const projects = await getProjects();
 
 const [experienceEntry] = await getCollection('experience');
 const experiences = experienceEntry?.data.experiences ?? [];

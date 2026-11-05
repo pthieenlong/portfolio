@@ -37,7 +37,7 @@ export function Header() {
         transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
         className={cn(
           "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-          !isAtTop && "glass",
+          !isAtTop && "glass-strong",
         )}
       >
         <nav className="container-custom">
@@ -52,7 +52,7 @@ export function Header() {
               <div className="w-8 h-8 rounded-lg bg-linear-to-br from-primary to-accent flex items-center justify-center text-primary-foreground text-sm font-bold">
                 L
               </div>
-              <span className="hidden sm:inline gradient-text">Long</span>
+              <span className="hidden sm:inline">Long</span>
             </motion.a>
 
             {/* Desktop Navigation */}

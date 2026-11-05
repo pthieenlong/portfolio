@@ -83,15 +83,16 @@ const formattedDate = publishedAt.toLocaleDateString('en-US', {
       <div class="h-px bg-border mb-10" />
 
       <!-- MDX Content -->
-      <article class="prose prose-invert prose-lg max-w-none
-        prose-headings:font-semibold prose-headings:text-foreground
+      <article class="glass rounded-3xl p-6 md:p-10 prose md:prose-lg dark:prose-invert max-w-none [&>:first-child]:mt-0
+        prose-headings:font-semibold prose-headings:text-foreground prose-headings:scroll-mt-24
+        prose-h2:text-2xl prose-h2:mt-12 prose-h2:mb-4
         prose-p:text-muted-foreground prose-p:leading-relaxed
         prose-a:text-primary prose-a:no-underline hover:prose-a:underline
-        prose-code:text-accent prose-code:bg-muted prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded
+        prose-code:text-foreground prose-code:bg-muted prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:font-normal prose-code:before:content-none prose-code:after:content-none
         prose-pre:bg-muted prose-pre:border prose-pre:border-border
         prose-strong:text-foreground
-        prose-li:text-muted-foreground
-        prose-table:text-sm
+        prose-li:text-muted-foreground prose-li:marker:text-primary
+        prose-table:text-sm prose-table:block prose-table:overflow-x-auto
         prose-th:text-foreground prose-th:font-semibold
         prose-td:text-muted-foreground
       ">
